@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Курс по DTF-печати</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="locked-note" id="lockedNote">Проверка доступа…</div>
+
+<div class="course-shell" id="courseShell" style="display:none;">
+  <div class="course-header">
+    <div>
+      <div class="eyebrow">
+        <span class="crosshair"><span class="crosshair-ring"></span></span>
+        CUSTOM STUDIO
+      </div>
+      <h1>Курс по DTF-печати</h1>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Выйти</button>
+  </div>
+
+  <div id="chapters"></div>
+</div>
+
+<script>
+const COURSE = [
+  {
+    title: "1. Введение",
+    lessons: [
+      { n: "1.1", title: "Добро пожаловать!", url: "https://teletype.in/@cstmstd/Lw55pGNm8hQ", video: true },
+      { n: "1.2", title: "Предисловие", url: "https://teletype.in/@cstmstd/u_pXJifdHCv", video: false },
+      { n: "1.3", title: "Обзор технологии DTF", url: "https://teletype.in/@cstmstd/uCPbVMOq6Xc", video: false },
+      { n: "1.4", title: "Необходимое оборудование и материалы", url: "https://teletype.in/@cstmstd/divk3oGoeKD", video: true },
+      { n: "1.5", title: "Преимущества и недостатки DTF-печати", url: "https://teletype.in/@cstmstd/WHsetnakpjv", video: false },
+      { n: "1.6", title: "Сравнение технологий печати", url: "https://teletype.in/@cstmstd/qWN1I9o9s2r", video: false }
+    ]
+  },
+  {
+    title: "2. Работа с принтером",
+    lessons: [
+      { n: "2.1", title: "Выбор принтера для переоборудования", url: "https://teletype.in/@cstmstd/o5m3QoToM6b", video: true },
+      { n: "2.2", title: "Подготовка принтера к DTF-печати", url: "https://teletype.in/@cstmstd/KISz25IkfMC", video: true },
+      { n: "2.3", title: "Ежедневное обслуживание принтера", url: "https://teletype.in/@cstmstd/fV6W85Q5ayh", video: true },
+      { n: "2.4", title: "Модификации", url: "https://teletype.in/@cstmstd/gz8VxIQh35A", video: false },
+      { n: "2.5", title: "Печатающая головка и манифолд", url: "https://teletype.in/@cstmstd/mAS558j-mgD", video: false },
+      { n: "2.6", title: "Промывка печатающей головы", url: "https://teletype.in/@cstmstd/l45w7VMXkU7", video: true }
+    ]
+  },
+  {
+    title: "3. Производственная часть",
+    lessons: [
+      { n: "3.1", title: "Печь", url: "https://teletype.in/@cstmstd/i-elqWUV9s4", video: true },
+      { n: "3.2", title: "Термопресс", url: "https://teletype.in/@cstmstd/eWySbGqlz3h", video: true },
+      { n: "3.3", title: "Держатель рулона", url: "https://teletype.in/@cstmstd/cg3Tk4v7Hnh", video: true },
+      { n: "3.4", title: "Расстановка", url: "https://teletype.in/@cstmstd/Q54fokHTfNw", video: false },
+      { n: "3.5", title: "Вытяжная система", url: "https://teletype.in/@cstmstd/O1Mo6AVBoXN", video: false },
+      { n: "3.6", title: "Позиционирование принтов", url: "https://teletype.in/@cstmstd/r2u1Xv4WLnd", video: true },
+      { n: "3.7", title: "Термоскотч", url: "https://teletype.in/@cstmstd/QAEIsBhJEaa", video: true },
+      { n: "3.8", title: "Подушки для печати", url: "https://teletype.in/@cstmstd/X7NNYL0jpmq", video: true }
+    ]
+  },
+  {
+    title: "4. Работа с программами",
+    lessons: [
+      { n: "4.1", title: "Программы для работы с DTF-печатью", url: "https://teletype.in/@cstmstd/jLpuF3Eskxa", video: false },
+      { n: "4.2", title: "Подготовка файлов к печати", url: "https://teletype.in/@cstmstd/U2UVxRF6Gu5", video: true },
+      { n: "4.3", title: "Работа c PrintHelp", url: "https://teletype.in/@cstmstd/L__cSiA0s5p", video: true },
+      { n: "4.4", title: "Работа c AcroRip", url: "https://teletype.in/@cstmstd/5ctfj4n-n7f", video: true },
+      { n: "4.5", title: "Работа c Antipampers", url: "https://teletype.in/@cstmstd/VnjnyzJQc-Y", video: true },
+      { n: "4.6", title: "Мокапы и работа с ними", url: "https://teletype.in/@cstmstd/OZjprxKG11M", video: true },
+      { n: "4.7", title: "Улучшение качества изображения", url: "https://teletype.in/@cstmstd/9hLvuPGpPaE", video: true },
+      { n: "4.8", title: "Полутоновая-растеризация", url: "https://teletype.in/@cstmstd/Dp9NBZYAeJh", video: true },
+      { n: "4.9", title: "Профилирование принтера и монитора", url: "https://teletype.in/@cstmstd/k8AH6tRbEjy", video: true },
+      { n: "4.9.1", title: "Процесс печати", url: "https://teletype.in/@cstmstd/nV_ybtLbQd1", video: true }
+    ]
+  },
+  {
+    title: "5. ЧЗВ",
+    lessons: [
+      { n: "5.1", title: "Медленная печать", url: "https://teletype.in/@cstmstd/pxWJcFqu3DQ", video: true },
+      { n: "5.2", title: "Грязный принт / полосы / течет подложка", url: "https://teletype.in/@cstmstd/g_bIBp5E8FB", video: true },
+      { n: "5.3", title: "Не насыщенный белый цвет", url: "https://teletype.in/@cstmstd/0WmtGblo3YB", video: true },
+      { n: "5.4", title: "Проблемы с захватом пленки", url: "https://teletype.in/@cstmstd/U7tqk-L47Jx", video: true },
+      { n: "5.5", title: "Вылезает белая подложка", url: "https://teletype.in/@cstmstd/2yklWK8Cfy3", video: true },
+      { n: "5.6", title: "Отклеивается печать", url: "https://teletype.in/@cstmstd/7NjCJuB-jzj", video: false },
+      { n: "5.7", title: "Принт «будто пылит»", url: "https://teletype.in/@cstmstd/_LN_ZV-77Y2", video: true },
+      { n: "5.8", title: "При включении горят красным кнопки", url: "https://teletype.in/@cstmstd/FAIHmJZmHnv", video: false }
+    ]
+  },
+  {
+    title: "6. Бизнес-аспекты и маркетинг",
+    lessons: [
+      { n: "6.1", title: "Поиск клиентов и стратегии продаж", url: "https://teletype.in/@cstmstd/oNRCRCm-X25", video: false },
+      { n: "6.2", title: "Создание портфолио и продвижение услуг", url: "https://teletype.in/@cstmstd/3wFlteQ299C", video: false },
+      { n: "6.3", title: "План развития и масштабирования бизнеса", url: "https://teletype.in/@cstmstd/VldXABxKpr_", video: false },
+      { n: "6.4", title: "Быстрые ответы", url: "https://teletype.in/@cstmstd/sa6c2Mw_wMl", video: false },
+      { n: "6.5", title: "Финансовая модель", url: "https://teletype.in/@cstmstd/dnZonRnirNo", video: true }
+    ]
+  },
+  {
+    title: "7. Завершение",
+    lessons: [
+      { n: "7", title: "Завершение курса", url: "https://teletype.in/@cstmstd/1A0Mc9V8nys", video: true }
+    ]
+  }
+];
+
+// --- Access check ---
+if (sessionStorage.getItem('dtf_logged_in') !== 'true') {
+  window.location.href = 'index.html';
+} else {
+  document.getElementById('lockedNote').style.display = 'none';
+  document.getElementById('courseShell').style.display = 'block';
+  renderCourse();
+}
+
+document.getElementById('logoutBtn').addEventListener('click', function () {
+  sessionStorage.removeItem('dtf_logged_in');
+  sessionStorage.removeItem('dtf_user');
+  window.location.href = 'index.html';
+});
+
+function renderCourse() {
+  const root = document.getElementById('chapters');
+  COURSE.forEach((chapter, i) => {
+    const div = document.createElement('div');
+    div.className = 'chapter';
+
+    const toggle = document.createElement('button');
+    toggle.className = 'chapter-toggle';
+    toggle.innerHTML = `
+      <span class="chapter-num">${String(i + 1).padStart(2, '0')}</span>
+      <span class="chapter-title">${chapter.title.replace(/^\d+\.\s*/, '')}</span>
+      <span class="chapter-count">${chapter.lessons.length} урок(ов)</span>
+      <span class="chapter-arrow">›</span>
+    `;
+    toggle.addEventListener('click', () => div.classList.toggle('open'));
+
+    const list = document.createElement('div');
+    list.className = 'lesson-list';
+    chapter.lessons.forEach(lesson => {
+      const a = document.createElement('a');
+      a.className = 'lesson-item';
+      a.href = lesson.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = `
+        <span>${lesson.n} ${lesson.title}</span>
+        ${lesson.video ? '<span class="lesson-video-tag">Видео</span>' : ''}
+      `;
+      list.appendChild(a);
+    });
+
+    div.appendChild(toggle);
+    div.appendChild(list);
+    root.appendChild(div);
+  });
+}
+</script>
+
+</body>
+</html>
