@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вход в курс — DTF-печать</title>
+<style>
+/* ===========================================================
+   DTF Course — design tokens
+   Palette:
+     --ink        #17181C  (background, "unprinted" dark film)
+     --paper      #F3EFE6  (card/text, PET film warm white)
+     --transfer   #FF5A2E  (heat-transfer orange — primary accent)
+     --cyan       #2FD1C2  (process-cyan — secondary accent)
+     --steel      #34363C  (borders, secondary surfaces)
+     --steel-2    #4B4E56  (muted text on dark)
+   Type:
+     display: 'Oswald' (condensed industrial, stencil-adjacent)
+     body:    'Manrope'
+   Signature element: registration crosshair marks (used in print
+   production to align color layers) as numbering / section markers.
+   =========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+:root {
+  --ink: #17181C;
+  --paper: #F3EFE6;
+  --transfer: #FF5A2E;
+  --cyan: #2FD1C2;
+  --steel: #34363C;
+  --steel-2: #8A8D94;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Manrope', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2, h3, .display {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+/* Registration crosshair — the signature device */
+.crosshair {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  flex-shrink: 0;
+}
+.crosshair::before,
+.crosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--transfer);
+}
+.crosshair::before { width: 100%; height: 2px; top: 50%; left: 0; transform: translateY(-50%); }
+.crosshair::after { width: 2px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
+.crosshair-ring {
+  position: absolute;
+  inset: -5px;
+  border: 1px solid var(--transfer);
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Login page ---------- */
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255,90,46,0.10), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(47,209,194,0.08), transparent 45%),
+    var(--ink);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--steel);
+  border: 1px solid #44474e;
+  border-radius: 4px;
+  padding: 40px 32px;
+  position: relative;
+}
+
+.login-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--steel-2);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+}
+
+.login-card h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+  color: var(--paper);
+}
+
+.login-sub {
+  color: var(--steel-2);
+  font-size: 14px;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--steel-2);
+  margin-bottom: 6px;
+  font-family: 'Oswald', sans-serif;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  background: var(--ink);
+  border: 1px solid #4B4E56;
+  color: var(--paper);
+  padding: 12px 14px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-family: 'Manrope', sans-serif;
+  margin-bottom: 18px;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: var(--transfer);
+}
+
+.btn {
+  width: 100%;
+  background: var(--transfer);
+  color: var(--ink);
+  border: none;
+  padding: 13px;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { filter: brightness(0.94); }
+
+.error-msg {
+  display: none;
+  color: var(--transfer);
+  font-size: 13px;
+  margin: -10px 0 18px;
+}
+.error-msg.show { display: block; }
+
+/* ---------- Course page ---------- */
+.course-shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--steel);
+}
+
+.course-header .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--steel-2);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+
+.course-header h1 { font-size: 30px; }
+
+.logout-btn {
+  background: none;
+  border: 1px solid var(--steel-2);
+  color: var(--steel-2);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.logout-btn:hover { border-color: var(--transfer); color: var(--transfer); }
+
+.chapter {
+  border: 1px solid var(--steel);
+  border-radius: 4px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  background: #1C1E23;
+}
+
+.chapter-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: none;
+  border: none;
+  color: var(--paper);
+  padding: 18px 20px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Manrope', sans-serif;
+}
+
+.chapter-num {
+  font-family: 'Oswald', sans-serif;
+  color: var(--transfer);
+  font-size: 13px;
+  min-width: 20px;
+}
+
+.chapter-title {
+  flex: 1;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+}
+
+.chapter-count {
+  color: var(--steel-2);
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.chapter-arrow {
+  color: var(--steel-2);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.chapter.open .chapter-arrow { transform: rotate(90deg); color: var(--transfer); }
+
+.lesson-list {
+  display: none;
+  border-top: 1px solid var(--steel);
+}
+.chapter.open .lesson-list { display: block; }
+
+.lesson-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px 13px 48px;
+  text-decoration: none;
+  color: var(--paper);
+  font-size: 14.5px;
+  border-bottom: 1px solid #26282E;
+}
+.lesson-item:last-child { border-bottom: none; }
+.lesson-item:hover { background: #23252B; color: var(--cyan); }
+
+.lesson-video-tag {
+  margin-left: auto;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: 2px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+
+.locked-note {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--steel-2);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+</style>
+</head>
+<body>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-eyebrow">
+      <span class="crosshair"><span class="crosshair-ring"></span></span>
+      CUSTOM STUDIO
+    </div>
+    <h1>Курс по DTF-печати</h1>
+    <p class="login-sub">Введите логин и пароль, которые вам выдали после оплаты.</p>
+
+    <form id="loginForm" autocomplete="off">
+      <label for="login">Логин</label>
+      <input type="text" id="login" name="login" autocomplete="username" required>
+
+      <label for="password">Пароль</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+      <p class="error-msg" id="errorMsg">Неверный логин или пароль. Проверьте данные и попробуйте ещё раз.</p>
+
+      <button type="submit" class="btn">Войти</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// Список логинов/паролей учеников.
+// Чтобы добавить нового ученика — просто добавь новую строку в этот массив и запушь на GitHub.
+const VALID_CREDENTIALS = [
+  { login: 'student001', password: 'xaji0y6d' },
+  { login: 'student002', password: 'pbhsahxt' },
+  { login: 'student003', password: 'hv3a3zmf' },
+  { login: 'student004', password: '8mdd4v30' },
+  { login: 'student005', password: 't9nt3w5u' },
+  { login: 'student006', password: 'zbikcidk' },
+  { login: 'student007', password: 'wnnhj7xv' },
+  { login: 'student008', password: 'g0fn9xuy' },
+  { login: 'student009', password: '41ibljh7' },
+  { login: 'student010', password: '5lxo6qji' },
+  { login: 'student011', password: 'ujv6oh9s' },
+  { login: 'student012', password: 'dbdw2pcn' },
+  { login: 'student013', password: '9t84azyt' },
+  { login: 'student014', password: 'jxepq85j' },
+  { login: 'student015', password: 'sg65kxvf' },
+  { login: 'student016', password: '1t2tala7' },
+  { login: 'student017', password: '53lc58dr' },
+  { login: 'student018', password: 'c11ertj5' },
+  { login: 'student019', password: 'pht0hl9x' },
+  { login: 'student020', password: 'pseimvih' },
+  { login: 'student021', password: 'cwi64ciy' },
+  { login: 'student022', password: 'he7ur23g' },
+  { login: 'student023', password: 'dppq0y9d' },
+  { login: 'student024', password: 'om5igqpk' },
+  { login: 'student025', password: 'i7p5tb94' },
+  { login: 'student026', password: '874frhoc' },
+  { login: 'student027', password: 'n9j2qp89' },
+  { login: 'student028', password: 'uzfk8ut0' },
+  { login: 'student029', password: 'cvs4f8cg' },
+  { login: 'student030', password: 'vyie6ivw' },
+  { login: 'student031', password: 'pvs7hzio' },
+  { login: 'student032', password: 'ykl1cq99' },
+  { login: 'student033', password: 'chj755nf' },
+  { login: 'student034', password: '4zw9xa3k' },
+  { login: 'student035', password: 'x7eedtjv' },
+  { login: 'student036', password: 'zhwjr64d' },
+  { login: 'student037', password: 'pja1wj0t' },
+  { login: 'student038', password: 'pac56t4u' },
+  { login: 'student039', password: 'fel6246h' },
+  { login: 'student040', password: 'id25owf7' },
+  { login: 'student041', password: '5935a0l7' },
+  { login: 'student042', password: '253j2d54' },
+  { login: 'student043', password: 'i3qk2iag' },
+  { login: 'student044', password: 'l58kxo9t' },
+  { login: 'student045', password: '7e8g8jdp' },
+  { login: 'student046', password: '0lvsnujz' },
+  { login: 'student047', password: 'a7tz0ync' },
+  { login: 'student048', password: 'xll4zklo' },
+  { login: 'student049', password: 'okep7y6w' },
+  { login: 'student050', password: 'ktakpuxq' },
+  { login: 'student051', password: 'phr62gds' },
+  { login: 'student052', password: 'wm31yiha' },
+  { login: 'student053', password: 'ir4cowgz' },
+  { login: 'student054', password: 'rixa11dp' },
+  { login: 'student055', password: 'g8sbi4q2' },
+  { login: 'student056', password: 'y9v86wzs' },
+  { login: 'student057', password: '3t60rjiw' },
+  { login: 'student058', password: '1swjckjl' },
+  { login: 'student059', password: 'teiyzcot' },
+  { login: 'student060', password: 'ohp6vz41' },
+  { login: 'student061', password: 'nam148p0' },
+  { login: 'student062', password: 'tvhhpbmy' },
+  { login: 'student063', password: 'ofqewaou' },
+  { login: 'student064', password: 'axeqbnhl' },
+  { login: 'student065', password: '1n13jcat' },
+  { login: 'student066', password: '9mx2x18h' },
+  { login: 'student067', password: 'afeyuhz1' },
+  { login: 'student068', password: 'gv0e38da' },
+  { login: 'student069', password: 'ly8ozcyw' },
+  { login: 'student070', password: 'd14ve92m' },
+  { login: 'student071', password: 'pnsm43d8' },
+  { login: 'student072', password: 'w3zp08j3' },
+  { login: 'student073', password: 'trp0j43d' },
+  { login: 'student074', password: '5iqvnb4g' },
+  { login: 'student075', password: 'h2m5zja8' },
+  { login: 'student076', password: 'dzr1yxr2' },
+  { login: 'student077', password: 'dhylurtp' },
+  { login: 'student078', password: '0lzjjege' },
+  { login: 'student079', password: 't1ghr09s' },
+  { login: 'student080', password: 'kdgigatj' },
+  { login: 'student081', password: '9tze5r5u' },
+  { login: 'student082', password: 'qpgb7r3o' },
+  { login: 'student083', password: 'cwbfuk9e' },
+  { login: 'student084', password: '1v2isqp4' },
+  { login: 'student085', password: '9kwv08hh' },
+  { login: 'student086', password: 'xfgcaqvk' },
+  { login: 'student087', password: 'izzqy72w' },
+  { login: 'student088', password: 'x7ptx63c' },
+  { login: 'student089', password: 'fl0ukeyz' },
+  { login: 'student090', password: '7srcbplj' },
+  { login: 'student091', password: 'd84u89yj' },
+  { login: 'student092', password: 'b1qx6gvw' },
+  { login: 'student093', password: 'rdmly4ly' },
+  { login: 'student094', password: 'k83tqll8' },
+  { login: 'student095', password: 'os9xtogn' },
+  { login: 'student096', password: '1w1ht7pz' },
+  { login: 'student097', password: 'e9vifttd' },
+  { login: 'student098', password: '96qe3rzs' },
+  { login: 'student099', password: 'j49itn7s' },
+  { login: 'student100', password: '55j2o7s3' },
+];
+
+</script>
+<script>
+  // Если уже залогинен — сразу на страницу курса
+  if (sessionStorage.getItem('dtf_logged_in') === 'true') {
+    window.location.href = 'course.html';
+  }
+
+  const form = document.getElementById('loginForm');
+  const errorMsg = document.getElementById('errorMsg');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const login = document.getElementById('login').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    const match = VALID_CREDENTIALS.some(
+      c => c.login === login && c.password === password
+    );
+
+    if (match) {
+      sessionStorage.setItem('dtf_logged_in', 'true');
+      sessionStorage.setItem('dtf_user', login);
+      window.location.href = 'course.html';
+    } else {
+      errorMsg.classList.add('show');
+    }
+  });
+</script>
+
+</body>
+</html>
