@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Custom Studio — Курсы</title>
+<title>Урок | Custom Studio</title>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -44,21 +44,47 @@ a { color: inherit; }
 .breadcrumbs .sep { color: #C7CBD2; }
 
 
-.shell { max-width: 900px; margin: 0 auto; padding: 48px 24px 100px; }
-.hero h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.01em; }
-.hero p { color: var(--grey); font-size: 15px; margin: 0 0 40px; max-width: 560px; }
+.shell { max-width: 720px; margin: 0 auto; padding: 24px 24px 120px; }
+.lesson-header { margin: 16px 0 28px; }
+.lesson-eyebrow { color: var(--blue); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.lesson-header h1 { font-size: 28px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
 
-.course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-.course-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: var(--black); display: block; transition: box-shadow 0.15s ease, transform 0.15s ease; }
-.course-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
-.course-card-top { background: var(--blue); height: 110px; display:flex; align-items:center; justify-content:center; }
-.course-card-top .mark { width: 44px; height: 44px; }
-.course-card-body { padding: 18px 18px 20px; }
-.course-card-body h3 { font-size: 16px; font-weight: 700; margin: 0 0 6px; }
-.course-card-body p { font-size: 13px; color: var(--grey); margin: 0 0 14px; line-height: 1.4; }
-.course-tag { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color: var(--blue); background: var(--blue-light); padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+.video-embed { position: relative; padding-top: 56%; margin-bottom: 20px; border-radius: 8px; overflow: hidden; background: #000; }
+.video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-.course-card-placeholder { border: 1.5px dashed var(--border); border-radius: 10px; display:flex; align-items:center; justify-content:center; min-height: 176px; color: var(--grey); font-size: 13px; text-align:center; padding: 20px; }
+.lesson-body { font-size: 16px; color: #222; }
+.lesson-body img { max-width: 100%; border-radius: 6px; margin: 14px 0; display: block; }
+.lesson-body h3 { font-size: 18px; font-weight: 700; margin: 24px 0 10px; }
+.lesson-body p { margin: 0 0 16px; }
+
+.unlock-cta {
+  position: sticky;
+  top: 84px;
+  z-index: 5;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+  padding: 22px 24px;
+  max-width: 380px;
+  margin: 8px auto 24px;
+  text-align: center;
+}
+.unlock-cta .icon { font-size: 22px; margin-bottom: 8px; }
+.unlock-cta h3 { font-size: 16px; font-weight: 700; margin: 0 0 6px; }
+.unlock-cta p { font-size: 13px; color: var(--grey); margin: 0 0 14px; }
+
+.blur-content {
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.not-migrated { background: var(--blue-light); border-radius: 8px; padding: 20px; text-align:center; color: var(--grey); font-size: 14px; }
+.not-migrated a { display:inline-block; margin-top: 10px; }
+
+.lesson-nav { display:flex; justify-content:space-between; gap: 12px; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -71,37 +97,203 @@ a { color: inherit; }
   <div class="auth-status" id="authStatus"></div>
 </div>
 
+<div class="breadcrumbs" id="breadcrumbs"></div>
+
 <div class="shell">
-  <div class="hero">
-    <h1>Курсы</h1>
-    <p>Обучающие материалы Custom Studio. Выберите курс, чтобы посмотреть программу.</p>
+  <div class="lesson-header">
+    <div class="lesson-eyebrow" id="chapterLabel"></div>
+    <h1 id="lessonTitle"></h1>
   </div>
 
-  <div class="course-grid">
-    <a href="course.html" class="course-card">
-      <div class="course-card-top">
-        <svg class="mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6h16M4 12h16M4 18h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="course-card-body">
-        <span class="course-tag">7 разделов · 44 урока</span>
-        <h3>Курс по DTF-печати</h3>
-        <p>От основ технологии и переоборудования принтера до бизнес-модели студии печати.</p>
-      </div>
-    </a>
+  <div id="lessonRoot"></div>
 
-    <div class="course-card-placeholder">Здесь появятся новые курсы</div>
-  </div>
+  <div class="lesson-nav" id="lessonNav"></div>
 </div>
 
 <script>
+const COURSE = [
+  { title: "Введение", lessons: [
+    { n: "1.1", title: "Добро пожаловать!", url: "https://teletype.in/@cstmstd/Lw55pGNm8hQ", video: true },
+    { n: "1.2", title: "Предисловие", url: "https://teletype.in/@cstmstd/u_pXJifdHCv", video: false },
+    { n: "1.3", title: "Обзор технологии DTF", url: "https://teletype.in/@cstmstd/uCPbVMOq6Xc", video: false },
+    { n: "1.4", title: "Необходимое оборудование и материалы", url: "https://teletype.in/@cstmstd/divk3oGoeKD", video: true },
+    { n: "1.5", title: "Преимущества и недостатки DTF-печати", url: "https://teletype.in/@cstmstd/WHsetnakpjv", video: false },
+    { n: "1.6", title: "Сравнение технологий печати", url: "https://teletype.in/@cstmstd/qWN1I9o9s2r", video: false }
+  ]},
+  { title: "Работа с принтером", lessons: [
+    { n: "2.1", title: "Выбор принтера для переоборудования", url: "https://teletype.in/@cstmstd/o5m3QoToM6b", video: true },
+    { n: "2.2", title: "Подготовка принтера к DTF-печати", url: "https://teletype.in/@cstmstd/KISz25IkfMC", video: true },
+    { n: "2.3", title: "Ежедневное обслуживание принтера", url: "https://teletype.in/@cstmstd/fV6W85Q5ayh", video: true },
+    { n: "2.4", title: "Модификации", url: "https://teletype.in/@cstmstd/gz8VxIQh35A", video: false },
+    { n: "2.5", title: "Печатающая головка и манифолд", url: "https://teletype.in/@cstmstd/mAS558j-mgD", video: false },
+    { n: "2.6", title: "Промывка печатающей головы", url: "https://teletype.in/@cstmstd/l45w7VMXkU7", video: true }
+  ]},
+  { title: "Производственная часть", lessons: [
+    { n: "3.1", title: "Печь", url: "https://teletype.in/@cstmstd/i-elqWUV9s4", video: true },
+    { n: "3.2", title: "Термопресс", url: "https://teletype.in/@cstmstd/eWySbGqlz3h", video: true },
+    { n: "3.3", title: "Держатель рулона", url: "https://teletype.in/@cstmstd/cg3Tk4v7Hnh", video: true },
+    { n: "3.4", title: "Расстановка", url: "https://teletype.in/@cstmstd/Q54fokHTfNw", video: false },
+    { n: "3.5", title: "Вытяжная система", url: "https://teletype.in/@cstmstd/O1Mo6AVBoXN", video: false },
+    { n: "3.6", title: "Позиционирование принтов", url: "https://teletype.in/@cstmstd/r2u1Xv4WLnd", video: true },
+    { n: "3.7", title: "Термоскотч", url: "https://teletype.in/@cstmstd/QAEIsBhJEaa", video: true },
+    { n: "3.8", title: "Подушки для печати", url: "https://teletype.in/@cstmstd/X7NNYL0jpmq", video: true }
+  ]},
+  { title: "Работа с программами", lessons: [
+    { n: "4.1", title: "Программы для работы с DTF-печатью", url: "https://teletype.in/@cstmstd/jLpuF3Eskxa", video: false },
+    { n: "4.2", title: "Подготовка файлов к печати", url: "https://teletype.in/@cstmstd/U2UVxRF6Gu5", video: true },
+    { n: "4.3", title: "Работа c PrintHelp", url: "https://teletype.in/@cstmstd/L__cSiA0s5p", video: true },
+    { n: "4.4", title: "Работа c AcroRip", url: "https://teletype.in/@cstmstd/5ctfj4n-n7f", video: true },
+    { n: "4.5", title: "Работа c Antipampers", url: "https://teletype.in/@cstmstd/VnjnyzJQc-Y", video: true },
+    { n: "4.6", title: "Мокапы и работа с ними", url: "https://teletype.in/@cstmstd/OZjprxKG11M", video: true },
+    { n: "4.7", title: "Улучшение качества изображения", url: "https://teletype.in/@cstmstd/9hLvuPGpPaE", video: true },
+    { n: "4.8", title: "Полутоновая-растеризация", url: "https://teletype.in/@cstmstd/Dp9NBZYAeJh", video: true },
+    { n: "4.9", title: "Профилирование принтера и монитора", url: "https://teletype.in/@cstmstd/k8AH6tRbEjy", video: true },
+    { n: "4.9.1", title: "Процесс печати", url: "https://teletype.in/@cstmstd/nV_ybtLbQd1", video: true }
+  ]},
+  { title: "ЧЗВ", lessons: [
+    { n: "5.1", title: "Медленная печать", url: "https://teletype.in/@cstmstd/pxWJcFqu3DQ", video: true },
+    { n: "5.2", title: "Грязный принт / полосы / течёт подложка", url: "https://teletype.in/@cstmstd/g_bIBp5E8FB", video: true },
+    { n: "5.3", title: "Не насыщенный белый цвет", url: "https://teletype.in/@cstmstd/0WmtGblo3YB", video: true },
+    { n: "5.4", title: "Проблемы с захватом плёнки", url: "https://teletype.in/@cstmstd/U7tqk-L47Jx", video: true },
+    { n: "5.5", title: "Вылезает белая подложка", url: "https://teletype.in/@cstmstd/2yklWK8Cfy3", video: true },
+    { n: "5.6", title: "Отклеивается печать", url: "https://teletype.in/@cstmstd/7NjCJuB-jzj", video: false },
+    { n: "5.7", title: "Принт «будто пылит»", url: "https://teletype.in/@cstmstd/_LN_ZV-77Y2", video: true },
+    { n: "5.8", title: "При включении горят красным кнопки", url: "https://teletype.in/@cstmstd/FAIHmJZmHnv", video: false }
+  ]},
+  { title: "Бизнес-аспекты и маркетинг", lessons: [
+    { n: "6.1", title: "Поиск клиентов и стратегии продаж", url: "https://teletype.in/@cstmstd/oNRCRCm-X25", video: false },
+    { n: "6.2", title: "Создание портфолио и продвижение услуг", url: "https://teletype.in/@cstmstd/3wFlteQ299C", video: false },
+    { n: "6.3", title: "План развития и масштабирования бизнеса", url: "https://teletype.in/@cstmstd/VldXABxKpr_", video: false },
+    { n: "6.4", title: "Быстрые ответы", url: "https://teletype.in/@cstmstd/sa6c2Mw_wMl", video: false },
+    { n: "6.5", title: "Финансовая модель", url: "https://teletype.in/@cstmstd/dnZonRnirNo", video: true }
+  ]},
+  { title: "Завершение", lessons: [
+    { n: "7", title: "Завершение курса", url: "https://teletype.in/@cstmstd/1A0Mc9V8nys", video: true }
+  ]}
+];
+
+const LESSON_CONTENT = {
+  "1.1": { video: "https://rutube.ru/play/embed/eeac52c1659687cd228344048f927fd1/", html: `
+    <h3>Чему вас научит этот курс?</h3>
+    <p>Добро пожаловать на наш курс по DTF-печати! Я рад, что вы решили присоединиться и углубить свои знания в этой передовой технологии. В этой лекции я расскажу, чему именно вы научитесь на этом курсе и какие навыки и знания вы приобретете.</p>
+    <p><strong>Основы DTF-печати</strong><br>С самого начала курса вы узнаете, что такое DTF-печать и какие основные принципы лежат в основе этой технологии. Мы подробно разберем все этапы процесса: от подготовки изображения до переноса его на ткань. Вы поймете, как работают принтеры, какие чернила используются и какие материалы необходимы для успешной печати.</p>
+    <p><strong>Оборудование и материалы</strong><br>Один из ключевых аспектов DTF-печати — это правильный выбор и использование оборудования. Мы рассмотрим различные типы принтеров и печатных головок, научимся подбирать подходящие чернила и пленки. Вы узнаете, как настраивать и обслуживать оборудование, чтобы обеспечить стабильное качество печати и длительный срок службы вашего оборудования.</p>
+    <p><strong>Процесс печати</strong><br>На курсе вы освоите все этапы процесса DTF-печати:</p>
+    <p>1. Подготовка изображения: как создавать и редактировать дизайны, чтобы они выглядели ярко и четко на ткани.<br>
+    2. Печать на PET-пленке: как правильно загрузить пленку в принтер, настроить параметры печати и добиться максимального качества изображения.<br>
+    3. Перенос изображения на ткань: как использовать термопресс для переноса изображения на ткань, соблюдая правильные температуры и давления.</p>
+    <p><strong>Решение проблем</strong><br>В процессе печати могут возникнуть различные проблемы, такие как нечеткие изображения, неправильные цвета или забитые печатные головки. На курсе мы научим вас диагностировать и устранять эти проблемы, чтобы ваша работа всегда была на высоте. Вы узнаете, как проводить регулярное обслуживание оборудования и какие меры предпринимать для предотвращения сбоев.</p>
+    <p><strong>Креативные возможности</strong><br>DTF-печать открывает огромные возможности для творчества. Мы расскажем, как использовать эту технологию для создания уникальных дизайнов и продуктов. Вы узнаете, как комбинировать различные техники печати, экспериментировать с цветами и текстурами, чтобы создавать действительно уникальные изделия.</p>
+    <p><strong>Практические советы</strong><br>Кроме теоретических знаний, на курсе будет много практических советов и рекомендаций. Мы поделимся секретами, которые помогут вам работать быстрее и эффективнее, избегать типичных ошибок и добиваться лучших результатов.</p>
+    <p><strong>Итог</strong><br>По окончании курса вы будете уверенно владеть всеми аспектами DTF-печати. Вы сможете самостоятельно создавать и реализовывать проекты, начиная от идеи и заканчивая готовым продуктом. Этот курс даст вам все необходимые знания и навыки для успешной работы в сфере DTF-печати и поможет вам стать настоящим профессионалом в этом деле.</p>
+    <p>Спасибо, что выбрали мой курс! Я уверен, что он будет для вас полезным и интересным. Удачи вам в обучении и в вашем творческом пути!</p>
+  ` },
+  "1.2": { video: null, html: `
+    <p><strong>Почему это выгодно?</strong></p>
+    <p>Первое, что стоит отметить, — это значительная экономия. Вместо того чтобы приобретать дорогие готовые комплекты, вы покупаете только принтер, избавляясь от ненужных доработок. Кроме того, ремонт можно проводить самостоятельно, имея доступ к запчастям и необходимой информации о них.</p>
+    <p><strong>Понимание работы принтера</strong><br>Освоив базовую модель принтера, вы поймёте принцип работы всех принтеров. Это знание значительно упростит диагностику и решение проблем в более сложных моделях.</p>
+    <p><strong>Самостоятельность</strong><br>Знание основ даст вам возможность решать проблемы без помощи курсов или мастеров, экономя ваше время и деньги. Вы сможете правильно формулировать вопросы при поиске информации, что облегчит поиск и покупку необходимых запчастей.</p>
+    <p><strong>Экономия времени</strong><br>Знание базовой модели принтера позволит быстро находить причины и решения проблем. Изучение специальных фишек в курсе поможет быстрее готовить макеты для печати.</p>
+    <p><strong>Повышение чека</strong><br>Курс научит вас использовать нейросети, что позволит увеличить чек на 15-20%. У вас будут готовые скрипты для общения с клиентами. Отдельный курс в рамках основного научит вас повышать чек с помощью различных методов.</p>
+    <p><strong>Гибкость обучения</strong><br>Вы можете изучать материал по мере необходимости, нет необходимости проходить курс полностью. В курсе вы найдете подсказки и готовые решения проблем, к которым сможете обратиться в любой момент.</p>
+    <p><strong>Дополнительные преимущества</strong><br>Помимо перечисленных преимуществ, вы также получите доступ к информации о работе с программами, изучите приемы, которые сократят время подготовки макета, научитесь быстрее отвечать клиентам и сможете сразу же определять, хочет ли клиент сделать заказ.</p>
+    <p>Важно отметить, что информация о модифицированных принтерах и нейросетях является актуальной и востребованной. Курс ориентирован на людей, желающих начать свой бизнес в сфере печати, но не имеющих достаточного опыта. Курс содержит множество практических советов и рекомендаций.</p>
+    <p>Я уверен, что самостоятельное изучение станет для вас выгодным и плодотворным решением. Не упустите возможность начать свой бизнес уже сегодня!</p>
+    <p><strong>Заключение</strong><br>Освоение DTF печати открывает перед вами широкие возможности для развития бизнеса. Это позволит вам сэкономить деньги, повысить свою самостоятельность и гибкость, а также улучшить качество и скорость работы. Начав с базовой модели принтера и освоив её, вы сможете уверенно шагать вперёд и расширять свои возможности.</p>
+    <p>Удачи в освоении DTF печати и успешного развития вашего бизнеса!</p>
+  ` },
+  "1.3": { video: null, html: `
+    <img src="https://img4.teletype.in/files/75/0c/750cf4c7-e251-4e79-a6a1-81961b15bbb0.jpeg">
+    <p><strong>Введение</strong><br>Привет! Сегодня мы поговорим о технологии DTF-печати (Direct To Film) на текстиле. Это современный метод цифровой печати, который позволяет создавать яркие и долговечные изображения на одежде и других текстильных изделиях. Разберем, как работает эта технология и в чем ее преимущества.</p>
+    <p><strong>Что такое DTF-печать?</strong><br>DTF-печать, или "Direct To Film", буквально переводится как "прямо на пленку". В этой технологии используется PET-пленка со специальным покрытием в качестве промежуточного носителя изображения. Это термотрансферная технология, что означает перенос изображения с пленки на текстильное изделие с помощью тепла и давления.</p>
+    <p><strong>Основные этапы процесса DTF-печати</strong></p>
+    <p>1. Печать изображения на пленке — первый шаг: печать изображения на PET-пленке с использованием специальных DTF-чернил. Эти чернила пигментные, на водной основе, включая белые чернила, которые необходимы для печати на цветных и черных тканях.</p>
+    <p>2. Обработка изображения клеем и запекание — после печати на пленку наносится порошковый термоклей. Затем пленка с клеем отправляется в печь, где клей плавится и прочно закрепляется на изображении. Этот этап называется "запекание" заготовки.</p>
+    <p>3. Перенос изображения на ткань — когда пленка с изображением и клеем готова, ее кладут на текстильное изделие и прижимают термопрессом. Под воздействием тепла и давления изображение переносится с пленки на ткань, и получается готовый принт.</p>
+    <p><strong>Сходства и различия с другими методами печати</strong><br>DTF-печать имеет много общего с пластизольной шелкографией, но предлагает более широкие возможности благодаря использованию цифрового оборудования. Это позволяет печатать полноцветные изображения с высокой точностью, даже если требуется всего один экземпляр. Также, в отличие от некоторых других методов, DTF-печать не требует предварительной подготовки ткани.</p>
+    <p><strong>Особенности DTF-термотрансферов</strong><br>Оперативная печать: возможность печати термотрансферов начиная с одного экземпляра — это экономично для малых тиражей. Полноцветная печать: можно печатать на тканях любого цвета, включая черный, благодаря белым чернилам. Широкий ассортимент тканей: DTF-термотрансферы подходят для различных типов тканей, независимо от их состава. Отсутствие предварительной подготовки: не требуется специальная подготовка ткани перед нанесением изображения.</p>
+    <p><strong>Преимущества DTF-печати</strong><br>Яркие и стойкие цвета: изображения получаются очень насыщенными и долговечными. Высокая универсальность: подходит для печати на различных тканях и изделиях. Удобство хранения: отпечатанные на пленке изображения можно хранить и использовать по мере необходимости. Отсутствие ограничений: можно печатать на тканях любого состава.</p>
+    <p><strong>Развитие и популяризация технологии</strong><br>DTF-печать быстро завоевала популярность и стала в один ряд с такими методами, как шелкография, DTG-печать (прямая печать на текстиле), и сублимационная печать. С развитием технологии появились специализированные принтеры для DTF-печати, автоматические шейкеры для запекания рулонных DTF-принтов и специальные печи для запекания.</p>
+    <p><strong>Заключение</strong><br>Теперь у тебя есть общее представление о технологии DTF-печати. Это современный и эффективный метод, который позволяет создавать качественные и долговечные изображения на текстиле. С его помощью можно печатать яркие и детализированные принты на различных тканях, что делает его отличным выбором для бизнеса в сфере печати на текстиле. Надеюсь, этот урок был полезным и интересным. Удачи в освоении DTF-печати!</p>
+  ` },
+  "1.4": { video: "https://rutube.ru/play/embed/1058f114f75f76fc1fbf9110fea8cba8/", html: `
+    <p>1. Переоборудованный принтер под DTF-печать<br>
+    2. Чернила для DTF-печати<br>
+    3. Порошковый клей<br>
+    4. Специальная ПЕТ-плёнка в рулоне<br>
+    5. Держатель для рулона<br>
+    6. Термопресс или утюг для переноса отпечатков на изделия<br>
+    7. Обычный бытовой духовой шкаф для запекания принтов<br>
+    8. Вытяжная система (канальный вентилятор и воздухоотводы)<br>
+    9. Соответствующее программное обеспечение для работы с изображениями и настройкой принтера</p>
+    <p><strong>Это минимальный набор оборудования для начала работы с DTF печатью.</strong></p>
+    <h3>Подробнее про каждый элемент:</h3>
+    <p><strong>Чернила для DTF-печати</strong><br>Состоят из пяти основных цветов: синего, красного, черного, желтого и белого. Белые чернила играют особую роль, создавая базу или подложку, на которую наносятся остальные цвета, и являются неотъемлемой частью создания высококачественных принтов.</p>
+    <img src="https://img4.teletype.in/files/7c/c1/7cc1c3bc-bd66-4dd5-98d7-66087cb0b645.png">
+    <p><strong>Клей</strong><br>Порошковый клей, используется для клеевой основы DTF-отпечатка. Порошок посыпается на отпечаток после того, как принтер напечатает изображение на пленке.</p>
+    <img src="https://img2.teletype.in/files/1f/43/1f43118d-34c2-4eb2-b7a2-28a9e644ec1a.png">
+    <p><strong>Пленка для DTF-печати</strong><br>Представлена в различных вариантах: в рулонах шириной от 30 до 120 см и листах формата А3/А4. Они могут быть как горячего, так и холодного отрыва. Пленки горячего отрыва дороже, потому что значительно ускоряют процесс печати тем, что их можно удалить сразу после прижима термопресса.</p>
+    <img src="https://img3.teletype.in/files/a7/88/a7880d64-5ed9-4c7f-ae95-2f995dd80136.png">
+    <p><strong>Держатель рулона</strong><br>Еще одна не заменимая вещь при печати с рулона. Настоятельно рекомендуем печатать именно рулоном, так как это намного экономичнее чем печать листами.</p>
+    <img src="https://img2.teletype.in/files/18/5f/185f3875-a71d-4d27-8820-bf34deab5359.png">
+    <p><strong>Термопресс</strong><br>Предназначен для переноса изображения на ткань под воздействием высокой температуры. Профессиональные термопрессы достаточно дорогостоящие, в начале можно пользоваться обычным бытовым утюгом, но в дальнейшем термопресс будет не заменим.</p>
+    <img src="https://img2.teletype.in/files/dd/d7/ddd7064f-7c08-4a88-b3bf-f94af233c9f7.png">
+    <p><strong>Духовой шкаф</strong><br>В самом начале можно и нужно использовать самую обыкновенную бытовую духовку! Духовка для запекания клея играет важную роль в процессе. Она необходима для расплавки порошкового клея, который уже находится на отпечатке, тем самым создавая клеевой слой. Опыт показывает, что специализированные DTF-печки менее эффективны. Так как духовки могут одновременно вмещать до 4-6 листов формата А3 и более, в то время как специализированные печки имеют только один слот для запекания пленки.</p>
+    <img src="https://img1.teletype.in/files/44/b1/44b14d00-ecb5-470a-a480-245df75511ae.png">
+    <p><strong>Вытяжная система (канальный вентилятор и воздухоотводы)</strong><br>Наличие вытяжной системы является крайне важным при работе с запеканием DTF-клея. При запекании в духовке, клей плавится и выделяет токсичные вещества, которые категорически нельзя вдыхать, так как они опасны для здоровья человека. Поэтому без должной вентиляции и вытяжки работать в таких условиях — <strong>запрещено.</strong></p>
+    <img src="https://img1.teletype.in/files/07/ba/07ba51ec-2e40-4cbf-87c7-644f58d867f5.png">
+    <p><strong>Программное обеспечение</strong><br>Для работы необходимы определённые программы, которые облегчают процесс и обеспечивают высокое качество конечного результата.</p>
+    <img src="https://img3.teletype.in/files/ea/54/ea547de5-7c88-4e1d-9492-924bbf3fad9d.png">
+  ` },
+  "1.5": { video: null, html: `
+    <img src="https://img1.teletype.in/files/ca/e3/cae3eeb4-f7c8-41be-86d4-963b152e76e7.jpeg">
+    <h3>Преимущества:</h3>
+    <p>— Универсальность: DTF‑печать подходит для широкого спектра тканей, включая хлопок, полиэстер, нейлон и смесовые ткани.<br>
+    — Простота использования: DTF не требует предварительной обработки ткани, что делает процесс печати более быстрым и простым.<br>
+    — Высокое качество печати: DTF обеспечивает яркие и насыщенные цвета, высокую детализацию и чёткость изображения.<br>
+    — Удобство: изображения на плёнке можно хранить и использовать, когда нужно.<br>
+    — Долговечность: DTF‑отпечатки устойчивы к стирке и не выцветают со временем.<br>
+    — Рентабельность: DTF может быть более рентабельным, чем другие методы печати, особенно для небольших тиражей.<br>
+    — Возможность печати на различных материалах: DTF подходит не только для одежды, но и для печати на сумках, обуви, чехлах для телефонов и других предметах.</p>
+    <h3>Недостатки:</h3>
+    <p>— Печать ощущается на ощупь и больше похожа на плёнку (но на плотных тканях, например толстовках, печать не ощущается и смотрится отлично!).<br>
+    — Для больших объёмов производства DTF‑печать может быть менее эффективной по времени и затратам по сравнению с другими методами, например, сильно проигрывает шелкографии на длинной дистанции.</p>
+  ` },
+  "1.6": { video: null, html: `
+    <p>Сегодня мы разберем и сравним несколько популярных технологий печати на текстиле: <strong>DTF (Direct To Film), DTG (Direct To Garment), шелкография и сублимация.</strong> Каждая из этих технологий имеет свои преимущества и недостатки, и понимание этих различий поможет вам выбрать наиболее подходящий метод для ваших нужд.</p>
+    <h3>DTF печать (Direct To Film)</h3>
+    <img src="https://img3.teletype.in/files/a0/94/a094cbcc-25ce-4f43-8b32-20915fff9518.jpeg">
+    <p><em>Принты распечатываются на специальной PET-пленке, затем в шейкер сушке посыпаются порошковым клеем, далее в печке клей запекается и становится клеевой основой принта.</em></p>
+    <p>Преимущества: 1. Простота — не требуется предварительная подготовка поверхности. Достаточно распечатать изображение на пленке, обработать его клеем и перенести на ткань с помощью термопресса. 2. Универсальность — подходит для различных типов тканей, включая как натуральные, так и синтетические материалы. 3. Оперативность — можно печатать с малым тиражом, начиная с одного экземпляра. 4. Хранение — отпечатанные на пленке изображения можно хранить и использовать по мере необходимости.</p>
+    <p>Недостатки: На белых изделиях печать без белой подложки невозможна, в отличие от DTG-печати. Принт ощущается на ощупь.</p>
+    <h3>DTG печать (Direct To Garment)</h3>
+    <img src="https://img1.teletype.in/files/0e/e9/0ee9a356-168d-4007-9e20-1595bb028775.jpeg">
+    <p><em>Футболка заправляется на специальном столе принтера и фиксируется рамкой, после чего принтер наносит краску непосредственно на саму футболку.</em></p>
+    <p>Преимущества: 1. Качество — высокая точность и детализация изображения. 2. Естественный внешний вид — принт на белых изделиях не ощущается на ощупь. 3. Прямое нанесение — не требуется промежуточный носитель, изображение наносится прямо на ткань.</p>
+    <p>Недостатки: 1. Дорогие чернила — стоят значительно дороже, чем для других методов. 2. Подготовка поверхности — требуется нанесение праймера на ткань, что увеличивает время и усилия на подготовку. 3. Позиционирование — требуется точное центрирование изделия на столе принтера. 4. Ограничения по типу ткани — нельзя печатать на синтетике, так как чернила проваливаются сквозь ткань.</p>
+    <h3>Сублимационная печать</h3>
+    <img src="https://img2.teletype.in/files/94/5a/945a35b4-5dcc-4666-b20f-07bae1c8df1c.jpeg">
+    <p><em>Сублимационным может быть любой принтер, если в него заправлены специальные чернила для сублимации.</em></p>
+    <p>Преимущества: 1. Цветовая стойкость — принты не выцветают и сохраняют яркость на протяжении длительного времени. 2. Отсутствие ощущения — принты не ощущаются на ощупь, так как чернила впитываются в ткань.</p>
+    <p>Недостатки: 1. Ограничения по ткани — можно печатать только на синтетических тканях, предпочтительно белого цвета. 2. Ограничения по цвету ткани — не подходит для цветных тканей.</p>
+    <h3>Шелкография</h3>
+    <img src="https://img1.teletype.in/files/87/5a/875a6b9e-de64-4a6d-9294-17085befc6ee.jpeg">
+    <p><em>Существуют как ручные так и полностью автоматизированные карусели для шелкографии.</em></p>
+    <p>Преимущества: 1. Долговечность — самый долговечный метод печати, принты выдерживают множество стирок без потери качества. 2. Высокая производительность — идеально подходит для больших тиражей, обеспечивая стабильное качество на протяжении всего тиража.</p>
+    <p>Недостатки: 1. Оптовые заказы — рентабельна только при больших тиражах. 2. Процесс подготовки — требует значительной подготовки, включая создание шаблонов и настройку оборудования. 3. Токсичность красок — часто использует пластизолевые краски, которые содержат ПВХ и фталаты, вредные для здоровья при длительном контакте. 4. Использование растворителей — для очистки оборудования используются агрессивные химические растворители. 5. Меры предосторожности — работникам необходимо использовать средства индивидуальной защиты.</p>
+    <img src="https://img2.teletype.in/files/dc/e7/dce74307-70da-425d-bd9e-783cb54e7850.png">
+    <h3>Заключение</h3>
+    <p>Каждая из рассмотренных технологий печати имеет свои особенности, и выбор наиболее подходящей зависит от ваших конкретных потребностей. DTF-печать удобна и универсальна, DTG-печать более приятна на ощупь чем DTF, сублимация отличается долговечностью на синтетике, а шелкография подходит для больших тиражей.</p>
+    <p>Надеюсь, эта лекция помогла вам лучше понять различия между этими методами и сделала выбор более осознанным. Успехов в изучении курса!</p>
+  ` }
+};
+
 const isLoggedIn = sessionStorage.getItem('dtf_logged_in') === 'true';
+
 const authStatus = document.getElementById('authStatus');
 authStatus.innerHTML = isLoggedIn
   ? '<span class="pill member">Вы вошли</span><button class="btn-small" id="logoutBtn">Выйти</button>'
   : '<span class="pill demo">Демо-режим</span><a href="login.html" class="btn-small solid">Войти</a>';
-
 setTimeout(() => {
   const btn = document.getElementById('logoutBtn');
   if (btn) btn.addEventListener('click', () => {
@@ -110,6 +302,82 @@ setTimeout(() => {
     window.location.reload();
   });
 }, 0);
+
+const params = new URLSearchParams(window.location.search);
+const chIdx = parseInt(params.get('ch') || '0', 10);
+const lessonN = params.get('n') || '1.1';
+
+const chapter = COURSE[chIdx];
+const lesson = chapter ? chapter.lessons.find(l => l.n === lessonN) : null;
+
+if (!chapter || !lesson) {
+  document.getElementById('lessonRoot').innerHTML = '<p>Урок не найден.</p>';
+} else {
+  document.getElementById('breadcrumbs').innerHTML = `
+    <a href="index.html">Custom Studio</a>
+    <span class="sep">/</span>
+    <a href="course.html">Курс по DTF-печати</a>
+    <span class="sep">/</span>
+    <a href="course.html#open-first">${chapter.title}</a>
+    <span class="sep">/</span>
+    <span class="current">${lesson.n}</span>
+  `;
+  document.getElementById('chapterLabel').textContent = chapter.title;
+  document.getElementById('lessonTitle').textContent = `${lesson.n} ${lesson.title}`;
+
+  const isFreeDemo = (chIdx === 0 && lessonN === "1.1");
+  const fullAccess = isLoggedIn || isFreeDemo;
+  const content = LESSON_CONTENT[lessonN];
+  const root = document.getElementById('lessonRoot');
+
+  let videoHtml = '';
+  if (content && content.video) {
+    videoHtml = `<div class="video-embed"><iframe src="${content.video}" allow="clipboard-write; autoplay" allowfullscreen></iframe></div>`;
+  }
+
+  if (!content) {
+    root.innerHTML = videoHtml + `<div class="not-migrated">Этот урок пока открывается на Teletype — перенос контента в процессе.<br><a href="${lesson.url}" target="_blank" rel="noopener" class="btn-small solid">Открыть урок на Teletype</a></div>`;
+  } else if (fullAccess) {
+    root.innerHTML = videoHtml + `<div class="lesson-body">${content.html}</div>`;
+  } else {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = content.html;
+    const children = Array.from(wrap.children);
+    const teaserCount = Math.min(2, children.length);
+    const teaserNodes = children.slice(0, teaserCount);
+    const restNodes = children.slice(teaserCount);
+
+    const teaserDiv = document.createElement('div');
+    teaserDiv.className = 'lesson-body';
+    teaserNodes.forEach(n => teaserDiv.appendChild(n));
+
+    const cta = document.createElement('div');
+    cta.className = 'unlock-cta';
+    cta.innerHTML = `
+      <div class="icon">🔒</div>
+      <h3>Полный урок открыт только для учеников курса</h3>
+      <p>Войдите по логину и паролю, которые получили после оплаты</p>
+      <a href="login.html" class="btn-small solid">Войти</a>
+    `;
+
+    const restDiv = document.createElement('div');
+    restDiv.className = 'lesson-body blur-content';
+    restNodes.forEach(n => restDiv.appendChild(n));
+
+    root.innerHTML = videoHtml;
+    root.appendChild(teaserDiv);
+    root.appendChild(cta);
+    root.appendChild(restDiv);
+  }
+
+  const idx = chapter.lessons.findIndex(l => l.n === lessonN);
+  const prev = chapter.lessons[idx - 1];
+  const next = chapter.lessons[idx + 1];
+  document.getElementById('lessonNav').innerHTML = `
+    ${prev ? `<a href="lesson.html?ch=${chIdx}&n=${encodeURIComponent(prev.n)}" class="btn-small">← ${prev.n} ${prev.title}</a>` : '<span></span>'}
+    ${next ? `<a href="lesson.html?ch=${chIdx}&n=${encodeURIComponent(next.n)}" class="btn-small">${next.n} ${next.title} →</a>` : '<span></span>'}
+  `;
+}
 </script>
 
 </body>
