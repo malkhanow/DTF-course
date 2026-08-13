@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Custom Studio — Курсы</title>
+<title>Курс по DTF-печати — о курсе | Custom Studio</title>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -44,21 +44,55 @@ a { color: inherit; }
 .breadcrumbs .sep { color: #C7CBD2; }
 
 
-.shell { max-width: 900px; margin: 0 auto; padding: 48px 24px 100px; }
-.hero h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.01em; }
-.hero p { color: var(--grey); font-size: 15px; margin: 0 0 40px; max-width: 560px; }
+.shell { max-width: 720px; margin: 0 auto; padding: 24px 24px 100px; }
 
-.course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-.course-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: var(--black); display: block; transition: box-shadow 0.15s ease, transform 0.15s ease; }
-.course-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
-.course-card-top { background: var(--blue); height: 110px; display:flex; align-items:center; justify-content:center; }
-.course-card-top .mark { width: 44px; height: 44px; }
-.course-card-body { padding: 18px 18px 20px; }
-.course-card-body h3 { font-size: 16px; font-weight: 700; margin: 0 0 6px; }
-.course-card-body p { font-size: 13px; color: var(--grey); margin: 0 0 14px; line-height: 1.4; }
-.course-tag { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color: var(--blue); background: var(--blue-light); padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+.hero { margin: 24px 0 40px; }
+.hero-eyebrow { color: var(--blue); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.hero h1 { font-size: 32px; font-weight: 800; margin: 0 0 14px; letter-spacing: -0.01em; }
+.hero p { font-size: 16px; color: var(--grey); margin: 0; }
 
-.course-card-placeholder { border: 1.5px dashed var(--border); border-radius: 10px; display:flex; align-items:center; justify-content:center; min-height: 176px; color: var(--grey); font-size: 13px; text-align:center; padding: 20px; }
+.cta-row { display:flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.btn-big { padding: 13px 24px; border-radius: 8px; font-weight: 700; font-size: 15px; text-decoration:none; display:inline-block; }
+.btn-big.solid { background: var(--blue); color: var(--white); }
+.btn-big.solid:hover { background: var(--blue-dark); }
+.btn-big.outline { border: 1.5px solid var(--blue); color: var(--blue); }
+.btn-big.outline:hover { background: var(--blue-light); }
+
+.section { margin: 44px 0; }
+.section h2 { font-size: 22px; font-weight: 800; margin: 0 0 16px; }
+.section p { font-size: 15.5px; line-height: 1.65; color: #222; margin: 0 0 14px; }
+.section h3 { font-size: 16px; font-weight: 700; margin: 20px 0 6px; }
+
+.audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 8px; }
+.audience-card { border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+.audience-card .emoji { font-size: 20px; margin-bottom: 8px; }
+.audience-card h4 { font-size: 14.5px; font-weight: 700; margin: 0 0 6px; }
+.audience-card p { font-size: 13.5px; color: var(--grey); margin: 0; line-height: 1.5; }
+
+.skill-list { list-style: none; margin: 0; padding: 0; }
+.skill-list li { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #F0F1F3; font-size: 15px; }
+.skill-list li:last-child { border-bottom: none; }
+.skill-check { color: var(--blue); font-weight: 800; flex-shrink: 0; }
+
+.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.how-card { background: var(--blue-light); border-radius: 8px; padding: 18px; }
+.how-card h4 { font-size: 14.5px; font-weight: 700; margin: 0 0 6px; color: var(--blue); }
+.how-card p { font-size: 13.5px; color: #333; margin: 0; line-height: 1.5; }
+
+.program-list { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.program-chapter { padding: 14px 18px; border-bottom: 1px solid var(--border); }
+.program-chapter:last-child { border-bottom: none; }
+.program-chapter h4 { font-size: 14.5px; font-weight: 700; margin: 0 0 6px; }
+.program-chapter p { font-size: 13px; color: var(--grey); margin: 0; line-height: 1.5; }
+
+.founder-quote { background: var(--blue-light); border-radius: 10px; padding: 24px; margin: 20px 0; }
+.founder-quote p:last-child { margin-bottom: 0; }
+
+.bottom-cta { background: var(--blue); border-radius: 12px; padding: 32px 28px; text-align:center; margin-top: 48px; }
+.bottom-cta h2 { color: var(--white); margin: 0 0 8px; }
+.bottom-cta p { color: #CFE0F2; margin: 0 0 20px; font-size: 14.5px; }
+.bottom-cta .btn-big.solid { background: var(--white); color: var(--blue); }
+.bottom-cta .btn-big.solid:hover { background: #EEF3F9; }
 </style>
 </head>
 <body>
@@ -71,30 +105,136 @@ a { color: inherit; }
   <div class="auth-status" id="authStatus"></div>
 </div>
 
+<div class="breadcrumbs">
+  <a href="index.html">Custom Studio</a>
+  <span class="sep">/</span>
+  <span class="current">Курс по DTF-печати</span>
+</div>
+
 <div class="shell">
+
   <div class="hero">
-    <h1>Курсы</h1>
-    <p>Обучающие материалы Custom Studio. Выберите курс, чтобы посмотреть программу.</p>
+    <div class="hero-eyebrow">Курс по DTF-печати</div>
+    <h1>👋🏻 Привет! Я — Владимир</h1>
+    <p>Здесь я делюсь опытом, лайфхаками и пошагово обучаю DTF-печати на текстиле с нуля!</p>
+    <div class="cta-row">
+      <a href="course.html" class="btn-big solid">Смотреть программу курса</a>
+      <a href="pricing.html" class="btn-big outline">Тарифы</a>
+      <a href="login.html" class="btn-big outline">Войти</a>
+    </div>
   </div>
 
-  <div class="course-grid">
-    <a href="about.html" class="course-card">
-      <div class="course-card-top">
-        <svg class="mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6h16M4 12h16M4 18h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="course-card-body">
-        <span class="course-tag">7 разделов · 44 урока</span>
-        <h3>Курс по DTF-печати</h3>
-        <p>От основ технологии и переоборудования принтера до бизнес-модели студии печати.</p>
-      </div>
-    </a>
-
-    <div class="course-card-placeholder">Здесь появятся новые курсы</div>
+  <div class="section">
+    <h2>Кому будет полезно</h2>
+    <ul class="skill-list">
+      <li><span class="skill-check">•</span> Тем, кто хочет запустить личный бизнес по печати на футболках / худи / свитшотах и т.д., но не знает с чего начать</li>
+      <li><span class="skill-check">•</span> Тем, кто уже печатает и хочет прокачать навыки и узнать много полезной инфы</li>
+      <li><span class="skill-check">•</span> Тем, кто просто решил научиться чему-то новому</li>
+    </ul>
+    <p style="margin-top:14px;">Тогда ты точно по адресу ⭐️</p>
   </div>
 
-  <p style="margin-top:20px; font-size:13px; color:var(--grey);"><a href="pricing.html" style="color:var(--blue); font-weight:700; text-decoration:none;">Смотреть тарифы курса по DTF-печати →</a></p>
+  <div class="section">
+    <h2>О себе</h2>
+
+    <h3>🌱 Как всё началось</h3>
+    <p>Моё знакомство с печатью началось в 2020 году, когда я оставил учебу на третьем курсе МВАА. После этого встал вопрос о том, как самостоятельно зарабатывать на жилье и повседневные расходы. В процессе поиска работы я наткнулся на вакансию печатника. Благодаря тому, что уже имел базовые навыки работы в Photoshop, устроился довольно быстро. Остальному обучился в процессе — всё оказалось вполне доступным, главное было получить практический опыт.</p>
+
+    <h3>🖨 Первые шаги в печати</h3>
+    <p>Мы занимались печатью методом DTG — прямой печати по ткани. На тот момент DTF-технология только начала появляться на рынке, её использовали единицы. Сегодня же этот метод активно развивается и становится одним из основных в индустрии печати.</p>
+
+    <h3>🚀 Мой первый бизнес</h3>
+    <p>Отработав больше года в печати, я понял, что готов начать своё дело. Параллельно с работой начал постепенно откладывать часть дохода и в итоге накопил чуть больше 100 тысяч рублей. Этих средств хватило, чтобы закупить необходимое оборудование, найти подходящее помещение и запустить собственное мини-производство, с которого начался мой путь в бизнесе.</p>
+
+    <h3>🖥 DTF-принтер и первые успехи</h3>
+    <p>Начал я с Epson 1410 — это был уже готовый, переделанный для DTF-принтер. Тогда мне казалось, что такая модификация требует серьёзных технических знаний, но позже понял, что этот процесс довольно прост, и я легко смогу обучить любого желающего переделывать такие принтеры самостоятельно.</p>
+
+    <h3>📈 Рост и развитие</h3>
+    <p>Epson 1410 зарекомендовал себя как надёжный и долговечный аппарат. При должном уходе он способен долго выполнять свою работу без сбоев. Однако, когда объёмы заказов начали расти, его производительности стало не хватать. На тот момент мне удавалось выполнять около 100 принтов формата А3 за три дня, что в пересчёте составляет примерно 43 метра плёнки. Позже я приобрёл второй такой же принтер, и скорость работы значительно увеличилась.</p>
+
+    <h3>📦 Поделюсь опытом</h3>
+    <p>Сегодня, имея значительный опыт и пройдя через множество трудностей, я готов делиться знаниями с теми, кто хочет освоить DTF-печать: от выбора оборудования до его настройки и обслуживания. Мой путь показывает, что этот бизнес вполне реален для каждого, кто готов учиться и двигаться вперёд.</p>
+  </div>
+
+  <div class="section">
+    <h2>Что я предлагаю</h2>
+
+    <h3>💡 Возможности курса</h3>
+    <p>Курс по DTF-печати — это реальная возможность сэкономить время и деньги на запуске своего мини-производства. Я подробно объясняю, как выбрать недорогой принтер за 20-30 тысяч рублей, который подойдёт для старта. С ним можно спокойно экспериментировать, не боясь что-то сломать. Эти модели хорошо изучены, запчасти легко найти, а информации в интернете хватает даже для новичка. Но чтобы вам не приходилось часами собирать всё по кускам, я собрал курс, который пошагово проведёт через весь процесс.</p>
+
+    <h3>❌ Почему не готовые комплекты?</h3>
+    <p>Потому что с ними гораздо сложнее разобраться, если что-то пойдёт не так. Начав с базового принтера и переделав его своими руками, вы лучше поймёте, как работает оборудование, и будете быстрее решать любые проблемы. Например, если вдруг пропадёт белый цвет, вы сразу поймёте, что дело в манифолде или демпферах, и сможете быстро это исправить.</p>
+
+    <h3>🛠 Практические навыки и фишки</h3>
+    <p>В курсе я делаю упор не только на технические моменты, но и на то, что действительно помогает зарабатывать. Вы научитесь грамотно решать возникающие проблемы, узнаете, какие запчасти нужно иметь в запасе и где их достать, разберётесь в программах, которые ускоряют подготовку макетов. А ещё я дам готовые скрипты для общения с клиентами, которые реально увеличивают чек на 15-20% с помощью современных инструментов вроде нейросетей.</p>
+
+    <h3>🚀 Старт уже в процессе обучения</h3>
+    <p>Главное преимущество курса — вы сможете начинать работать, даже пока будете проходить обучение. Я буду на связи, помогу с вопросами и сложностями. Начав с базового принтера, вы постепенно перейдёте к более сложным моделям, уже имея практический опыт.</p>
+  </div>
+
+  <div class="section">
+    <h2>Как проходит обучение</h2>
+    <div class="how-grid">
+      <div class="how-card"><h4>Смотрите видео-лекции</h4><p>Качественное видео с понятным объяснением и практическими навыками</p></div>
+      <div class="how-card"><h4>Практикуйтесь</h4><p>Много видео-инструкций, следуя которым вы шаг за шагом познаёте что-то новое</p></div>
+      <div class="how-card"><h4>Спрашивайте</h4><p>Задавайте вопросы по темам, которые показались непонятными</p></div>
+      <div class="how-card"><h4>Обменивайтесь опытом</h4><p>Общайтесь с участниками курса — сюда же будут выкладываться дополнительные занятия, не вошедшие в основной курс</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Курс по DTF-печати</h2>
+    <p>Я подробно расскажу, как выбрать принтер и всё необходимое для работы. Комплект оборудования для старта обойдётся в пределах 100 тысяч рублей. В курсе вы найдёте детальные видео-инструкции по переделке принтеров Epson 1410 и 1800 для DTF-печати. Я также покажу, как с помощью нейросетей можно повысить чек на 15-20%.</p>
+    <p>Все материалы — и видео, и текст — я разработал так, чтобы они были максимально понятными даже для тех, кто только начинает. Это действительно народный курс, без лишнего пафоса и воды. Всё чётко, по делу и с упором на практику.</p>
+  </div>
+
+  <div class="section">
+    <h2>Программа обучения</h2>
+    <div class="program-list">
+      <div class="program-chapter"><h4>01 · Введение</h4><p>Обзор технологии DTF · Необходимое оборудование и материалы · Преимущества и недостатки · Сравнение технологий печати</p></div>
+      <div class="program-chapter"><h4>02 · Работа с принтером</h4><p>Выбор принтера для переоборудования · Подготовка принтера · Ежедневное обслуживание · Модификации · Печатающая головка и манифолд · Промывка головы</p></div>
+      <div class="program-chapter"><h4>03 · Производственная часть</h4><p>Печь · Термопресс · Держатель рулона · Расстановка · Вытяжная система · Позиционирование принтов · Подушки для печати</p></div>
+      <div class="program-chapter"><h4>04 · Работа с программами</h4><p>Программы для DTF-печати · Photoshop · PrintHelp · AcroRip · Antipampers · Работа с макетами · Улучшение качества изображения · Растеризация · Профилирование · Процесс печати</p></div>
+      <div class="program-chapter"><h4>05 · Часто возникающие проблемы при печати</h4><p>Медленная печать · Грязный принт / полосы / течёт подложка · Не насыщенный белый цвет · Проблемы с захватом плёнки · Вылезает белая подложка · Отклеивается печать · Принт «будто пылит» · Красные кнопки при включении</p></div>
+      <div class="program-chapter"><h4>06 · Бизнес-аспекты и маркетинг</h4><p>Поиск клиентов и стратегии продаж · Портфолио и продвижение услуг · План развития и масштабирования · Быстрые ответы · Финансовая модель</p></div>
+      <div class="program-chapter"><h4>07 · Итог</h4><p>Завершение курса</p></div>
+    </div>
+    <p style="margin-top:16px;">Вот в целом и всё 😍 Да, кажется много, страшно, но на самом деле это под силу каждому! Как говорится: «Дорогу осилит идущий!»</p>
+  </div>
+
+  <div class="section">
+    <h2>Кому подойдёт этот курс?</h2>
+    <div class="audience-grid">
+      <div class="audience-card"><div class="emoji">🤓</div><h4>Начинающим предпринимателям</h4><p>Этот курс идеально подходит для тех, кто хочет открыть своё дело в сфере печати на текстиле. Даст все необходимые знания для старта: от выбора оборудования до работы с клиентами.</p></div>
+      <div class="audience-card"><div class="emoji">🎨</div><h4>Дизайнерам и художникам</h4><p>Поможет расширить навыки и научиться создавать уникальные принты на футболках, открывая новые возможности для творческих идей.</p></div>
+      <div class="audience-card"><div class="emoji">👨‍🎓</div><h4>Студентам и любителям творчества</h4><p>Отличный старт для тех, кто хочет освоить новую профессию — курс подходит даже тем, кто не имеет опыта в печати.</p></div>
+      <div class="audience-card"><div class="emoji">😇</div><h4>Тем, кто хочет расширить горизонты</h4><p>Возможность выйти за рамки обычного хобби и углубиться в интересную и прибыльную нишу.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Чему вы научитесь</h2>
+    <ul class="skill-list">
+      <li><span class="skill-check">☑️</span> Модифицировать Epson 1410/1800 в DTF принтеры — значительно сэкономите на оборудовании.</li>
+      <li><span class="skill-check">☑️</span> Подготавливать и редактировать изображения в Photoshop для DTF печати.</li>
+      <li><span class="skill-check">☑️</span> Настраивать параметры печати в программе AcroRip для наилучшего качества и яркости принтов.</li>
+      <li><span class="skill-check">☑️</span> Правильно позиционировать и переносить принты на футболки с помощью термопресса.</li>
+      <li><span class="skill-check">☑️</span> Избегать распространённых ошибок и повышать качество готовых изделий.</li>
+    </ul>
+  </div>
+
+  <div class="founder-quote">
+    <p><strong>Обучение проходит на сайте.</strong> Каждый из вас может совмещать обучение с работой, учёбой и подстраивать график обучения под себя!</p>
+    <p>Я предоставляю вам доступ к занятиям. Приобретая обучение один раз, оно остаётся с вами <strong>БЕССРОЧНО</strong>!</p>
+    <p>Обучение — это прописная инструкция по созданию своего собственного бизнеса по печати на текстиле!</p>
+  </div>
+
+  <div class="bottom-cta">
+    <h2>Готовы начать обучение?</h2>
+    <p>Есть вопросы? Смело пишите в лс @cstmstd</p>
+    <a href="pricing.html" class="btn-big solid">Смотреть тарифы</a>
+  </div>
+
 </div>
 
 <script>
@@ -103,7 +243,6 @@ const authStatus = document.getElementById('authStatus');
 authStatus.innerHTML = isLoggedIn
   ? '<span class="pill member">Вы вошли</span><button class="btn-small" id="logoutBtn">Выйти</button>'
   : '<span class="pill demo">Демо-режим</span><a href="login.html" class="btn-small solid">Войти</a>';
-
 setTimeout(() => {
   const btn = document.getElementById('logoutBtn');
   if (btn) btn.addEventListener('click', () => {

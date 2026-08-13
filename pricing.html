@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Custom Studio — Курсы</title>
+<title>Тарифы | Курс по DTF-печати | Custom Studio</title>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -44,21 +44,34 @@ a { color: inherit; }
 .breadcrumbs .sep { color: #C7CBD2; }
 
 
-.shell { max-width: 900px; margin: 0 auto; padding: 48px 24px 100px; }
-.hero h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.01em; }
-.hero p { color: var(--grey); font-size: 15px; margin: 0 0 40px; max-width: 560px; }
+.shell { max-width: 1080px; margin: 0 auto; padding: 24px 24px 100px; }
+.hero { text-align:center; margin: 20px 0 40px; }
+.hero h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px; }
+.hero p { color: var(--grey); font-size: 15px; margin: 0; }
 
-.course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-.course-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: var(--black); display: block; transition: box-shadow 0.15s ease, transform 0.15s ease; }
-.course-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
-.course-card-top { background: var(--blue); height: 110px; display:flex; align-items:center; justify-content:center; }
-.course-card-top .mark { width: 44px; height: 44px; }
-.course-card-body { padding: 18px 18px 20px; }
-.course-card-body h3 { font-size: 16px; font-weight: 700; margin: 0 0 6px; }
-.course-card-body p { font-size: 13px; color: var(--grey); margin: 0 0 14px; line-height: 1.4; }
-.course-tag { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color: var(--blue); background: var(--blue-light); padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+.tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: stretch; }
 
-.course-card-placeholder { border: 1.5px dashed var(--border); border-radius: 10px; display:flex; align-items:center; justify-content:center; min-height: 176px; color: var(--grey); font-size: 13px; text-align:center; padding: 20px; }
+.tier-card { border: 1.5px solid var(--border); border-radius: 12px; padding: 24px 20px; display:flex; flex-direction:column; position: relative; }
+.tier-card.popular { border-color: var(--blue); box-shadow: 0 8px 24px rgba(0,74,151,0.12); }
+.popular-badge { position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--blue); color:var(--white); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; padding:4px 12px; border-radius:20px; }
+
+.tier-name { font-size: 15px; font-weight: 700; color: var(--grey); text-transform:uppercase; letter-spacing:0.04em; margin-bottom: 8px; }
+.tier-price { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+.tier-price .free { color: var(--blue); }
+.tier-note { font-size: 12px; color: var(--grey); margin-bottom: 20px; }
+
+.tier-features { list-style:none; margin: 0 0 24px; padding:0; flex: 1; }
+.tier-features li { display:flex; gap:8px; align-items:flex-start; font-size: 13.5px; padding: 8px 0; border-bottom: 1px solid #F0F1F3; line-height:1.4; }
+.tier-features li:last-child { border-bottom: none; }
+.tier-features .check { color: var(--blue); font-weight: 800; flex-shrink:0; }
+
+.tier-cta { display:block; text-align:center; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration:none; }
+.tier-cta.solid { background: var(--blue); color: var(--white); }
+.tier-cta.solid:hover { background: var(--blue-dark); }
+.tier-cta.outline { border: 1.5px solid var(--blue); color: var(--blue); }
+.tier-cta.outline:hover { background: var(--blue-light); }
+
+.note-block { margin-top: 40px; background: var(--blue-light); border-radius: 10px; padding: 20px 24px; font-size: 13.5px; color: #333; text-align:center; }
 </style>
 </head>
 <body>
@@ -71,30 +84,92 @@ a { color: inherit; }
   <div class="auth-status" id="authStatus"></div>
 </div>
 
+<div class="breadcrumbs">
+  <a href="index.html">Custom Studio</a>
+  <span class="sep">/</span>
+  <a href="about.html">Курс по DTF-печати</a>
+  <span class="sep">/</span>
+  <span class="current">Тарифы</span>
+</div>
+
 <div class="shell">
   <div class="hero">
-    <h1>Курсы</h1>
-    <p>Обучающие материалы Custom Studio. Выберите курс, чтобы посмотреть программу.</p>
+    <h1>Тарифы курса DTF-печати</h1>
+    <p>Выберите вариант, который подходит именно вам — от бесплатного знакомства до личных консультаций.</p>
   </div>
 
-  <div class="course-grid">
-    <a href="about.html" class="course-card">
-      <div class="course-card-top">
-        <svg class="mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6h16M4 12h16M4 18h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="course-card-body">
-        <span class="course-tag">7 разделов · 44 урока</span>
-        <h3>Курс по DTF-печати</h3>
-        <p>От основ технологии и переоборудования принтера до бизнес-модели студии печати.</p>
-      </div>
-    </a>
+  <div class="tier-grid">
 
-    <div class="course-card-placeholder">Здесь появятся новые курсы</div>
+    <div class="tier-card">
+      <div class="tier-name">Демо</div>
+      <div class="tier-price"><span class="free">Бесплатно</span></div>
+      <div class="tier-note">Без входа на сайт</div>
+      <ul class="tier-features">
+        <li><span class="check">✓</span> Глава «Введение» полностью — 6 уроков</li>
+        <li><span class="check">✓</span> Обзор технологии DTF и оборудования</li>
+        <li><span class="check">✓</span> Без регистрации</li>
+      </ul>
+      <a href="about.html" class="tier-cta outline">Смотреть бесплатно</a>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-name">Точка входа</div>
+      <div class="tier-price">350 ₽</div>
+      <div class="tier-note">Доступ навсегда</div>
+      <ul class="tier-features">
+        <li><span class="check">✓</span> 2 урока курса на выбор</li>
+        <li><span class="check">✓</span> Например — решить одну конкретную проблему из главы «ЧЗВ»</li>
+        <li><span class="check">✓</span> Доступ бессрочно</li>
+      </ul>
+      <a href="https://t.me/cstmstd" target="_blank" rel="noopener" class="tier-cta outline">Написать в Telegram</a>
+    </div>
+
+    <div class="tier-card popular">
+      <div class="popular-badge">Популярный</div>
+      <div class="tier-name">Стандарт</div>
+      <div class="tier-price">4 900 ₽</div>
+      <div class="tier-note">Доступ навсегда · 20 уроков</div>
+      <ul class="tier-features">
+        <li><span class="check">✓</span> Глава «Введение» — основы технологии</li>
+        <li><span class="check">✓</span> Глава «Работа с принтером» — переоборудование и обслуживание</li>
+        <li><span class="check">✓</span> Глава «ЧЗВ» — решение частых проблем печати</li>
+        <li><span class="check">✓</span> Доступ бессрочно, свой темп обучения</li>
+      </ul>
+      <a href="https://t.me/cstmstd" target="_blank" rel="noopener" class="tier-cta solid">Написать в Telegram</a>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-name">Профи</div>
+      <div class="tier-price">12 900 ₽</div>
+      <div class="tier-note">Доступ навсегда · весь курс, 44 урока</div>
+      <ul class="tier-features">
+        <li><span class="check">✓</span> Всё из тарифа «Стандарт»</li>
+        <li><span class="check">✓</span> + Глава «Производственная часть»</li>
+        <li><span class="check">✓</span> + Глава «Работа с программами»</li>
+        <li><span class="check">✓</span> + Глава «Бизнес-аспекты и маркетинг»</li>
+        <li><span class="check">✓</span> Мокапы в подарок</li>
+        <li><span class="check">✓</span> Шаблоны быстрых ответов клиентам</li>
+      </ul>
+      <a href="https://t.me/cstmstd" target="_blank" rel="noopener" class="tier-cta outline">Написать в Telegram</a>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-name">VIP</div>
+      <div class="tier-price">24 900 ₽</div>
+      <div class="tier-note">Доступ навсегда</div>
+      <ul class="tier-features">
+        <li><span class="check">✓</span> Всё из тарифа «Профи»</li>
+        <li><span class="check">✓</span> Личные консультации и созвоны с автором курса</li>
+        <li><span class="check">✓</span> Разбор ваших вопросов и сложностей лично</li>
+      </ul>
+      <a href="https://t.me/cstmstd" target="_blank" rel="noopener" class="tier-cta outline">Написать в Telegram</a>
+    </div>
+
   </div>
 
-  <p style="margin-top:20px; font-size:13px; color:var(--grey);"><a href="pricing.html" style="color:var(--blue); font-weight:700; text-decoration:none;">Смотреть тарифы курса по DTF-печати →</a></p>
+  <div class="note-block">
+    Есть вопросы по тарифам? Пишите в личные сообщения — <a href="https://t.me/cstmstd" target="_blank" rel="noopener" style="color:var(--blue); font-weight:700;">@cstmstd</a>
+  </div>
 </div>
 
 <script>
@@ -103,7 +178,6 @@ const authStatus = document.getElementById('authStatus');
 authStatus.innerHTML = isLoggedIn
   ? '<span class="pill member">Вы вошли</span><button class="btn-small" id="logoutBtn">Выйти</button>'
   : '<span class="pill demo">Демо-режим</span><a href="login.html" class="btn-small solid">Войти</a>';
-
 setTimeout(() => {
   const btn = document.getElementById('logoutBtn');
   if (btn) btn.addEventListener('click', () => {
