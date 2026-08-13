@@ -195,7 +195,7 @@ COURSE.forEach((chapter, i) => {
     const a = document.createElement('a');
     a.className = 'lesson-item';
     a.href = `lesson.html?ch=${i}&n=${encodeURIComponent(lesson.n)}`;
-    const isFreeDemo = (i === 0 && lesson.n === "1.1");
+    const isFreeDemo = (i === 0); // вся глава "Введение" открыта без входа
     a.innerHTML = `
       <span>${lesson.n} ${chapter.lessons.find(l => l.n === lesson.n).title}</span>
       ${lesson.video ? '<span class="lesson-video-tag">Видео</span>' : (isLoggedIn || isFreeDemo ? '' : '<span class="lesson-lock">🔒</span>')}
