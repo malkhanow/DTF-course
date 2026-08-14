@@ -79,7 +79,9 @@ a { color: inherit; }
 <div class="breadcrumbs">
   <a href="index.html">Custom Studio</a>
   <span class="sep">/</span>
-  <span class="current">Курс по DTF-печати</span>
+  <a href="about.html">Курс по DTF-печати</a>
+  <span class="sep">/</span>
+  <span class="current">Программа</span>
 </div>
 
 <div class="shell">
@@ -154,22 +156,48 @@ const COURSE = [
 ];
 
 
+// Ссылка "Точка входа": ?entry=5.2,5.4 — выдаёт доступ к этим урокам без пароля
+(function () {
+  const entryParam = new URLSearchParams(window.location.search).get('entry');
+  if (entryParam) {
+    const lessons = entryParam.split(',').map(s => s.trim()).filter(Boolean);
+    sessionStorage.setItem('dtf_logged_in', 'true');
+    sessionStorage.setItem('dtf_tier', 'entry');
+    sessionStorage.setItem('dtf_access', JSON.stringify({ type: 'lessons', lessons }));
+  }
+})();
+
 const isLoggedIn = sessionStorage.getItem('dtf_logged_in') === 'true';
+const userTier = sessionStorage.getItem('dtf_tier');
+let userAccess = null;
+try { userAccess = JSON.parse(sessionStorage.getItem('dtf_access') || 'null'); } catch (e) { userAccess = null; }
+
+const TIER_LABELS = { standard: 'Стандарт', profi: 'Профи', vip: 'VIP', entry: 'Точка входа' };
+
+function hasChapterAccess(chIdx, lessonN) {
+  if (chIdx === 0) return true; // глава "Введение" всегда открыта
+  if (!isLoggedIn || !userAccess) return false;
+  if (userAccess.type === 'chapters') return userAccess.chapters.includes(chIdx);
+  if (userAccess.type === 'lessons') return userAccess.lessons.includes(lessonN);
+  return false;
+}
 
 const authStatus = document.getElementById('authStatus');
 authStatus.innerHTML = isLoggedIn
-  ? '<span class="pill member">Вы вошли</span><button class="btn-small" id="logoutBtn">Выйти</button>'
+  ? `<span class="pill member">${TIER_LABELS[userTier] || 'Вы вошли'}</span><button class="btn-small" id="logoutBtn">Выйти</button>`
   : '<span class="pill demo">Демо-режим</span><a href="login.html" class="btn-small solid">Войти</a>';
 
 document.getElementById('heroSub').textContent = isLoggedIn
-  ? "7 разделов, 44 урока. Открывайте любой урок — материалы доступны полностью."
-  : "7 разделов, 44 урока. Урок 1.1 открыт полностью в демо-режиме, остальные — частично.";
+  ? "7 разделов, 44 урока. Доступны материалы вашего тарифа."
+  : "7 разделов, 44 урока. Глава «Введение» открыта полностью в демо-режиме, остальные — по тарифу.";
 
 setTimeout(() => {
   const btn = document.getElementById('logoutBtn');
   if (btn) btn.addEventListener('click', () => {
     sessionStorage.removeItem('dtf_logged_in');
     sessionStorage.removeItem('dtf_user');
+    sessionStorage.removeItem('dtf_tier');
+    sessionStorage.removeItem('dtf_access');
     window.location.reload();
   });
 }, 0);
@@ -195,10 +223,10 @@ COURSE.forEach((chapter, i) => {
     const a = document.createElement('a');
     a.className = 'lesson-item';
     a.href = `lesson.html?ch=${i}&n=${encodeURIComponent(lesson.n)}`;
-    const isFreeDemo = (i === 0); // вся глава "Введение" открыта без входа
+    const unlocked = hasChapterAccess(i, lesson.n);
     a.innerHTML = `
       <span>${lesson.n} ${chapter.lessons.find(l => l.n === lesson.n).title}</span>
-      ${lesson.video ? '<span class="lesson-video-tag">Видео</span>' : (isLoggedIn || isFreeDemo ? '' : '<span class="lesson-lock">🔒</span>')}
+      ${lesson.video ? '<span class="lesson-video-tag">Видео</span>' : (unlocked ? '' : '<span class="lesson-lock">🔒</span>')}
     `;
     list.appendChild(a);
   });
