@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Вход | Custom Studio</title>
+<title>Личный кабинет | Custom Studio</title>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -44,20 +44,55 @@ a { color: inherit; }
 .breadcrumbs .sep { color: #C7CBD2; }
 
 
-.wrap { min-height: calc(100vh - 64px); display:flex; align-items:center; justify-content:center; padding: 24px; }
-.card { width: 100%; max-width: 400px; }
-h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
-.sub { color: var(--grey); font-size: 15px; margin: 0 0 28px; }
-label { display:block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-input[type="text"], input[type="password"] { width:100%; border:1.5px solid #D8DCE3; padding:13px 14px; border-radius:6px; font-size:15px; font-family:'Inter',Arial,sans-serif; margin-bottom:18px; }
-input:focus { outline:none; border-color: var(--blue); }
-.btn { width:100%; background:var(--blue); color:var(--white); border:none; padding:14px; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:15px; border-radius:6px; cursor:pointer; }
-.btn:hover { background: var(--blue-dark); }
-.error-msg { display:none; background:#FDECEC; color:#B42318; font-size:13px; font-weight:500; padding:10px 12px; border-radius:6px; margin:-8px 0 18px; }
-.error-msg.show { display:block; }
-.demo-link { text-align:center; margin-top:24px; font-size:14px; }
-.demo-link a { color: var(--blue); font-weight:600; text-decoration:none; }
-.demo-link a:hover { text-decoration:underline; }
+.shell { max-width: 760px; margin: 0 auto; padding: 24px 24px 100px; }
+
+/* --- Password gate --- */
+.gate-wrap { min-height: 70vh; display:flex; align-items:center; justify-content:center; padding: 24px; }
+.gate-card { width: 100%; max-width: 360px; }
+.gate-card h1 { font-size: 22px; font-weight: 800; margin: 0 0 16px; }
+.gate-card input { width:100%; border:1.5px solid #D8DCE3; padding:12px 14px; border-radius:6px; font-size:15px; margin-bottom:14px; }
+.gate-card .btn { width:100%; background:var(--blue); color:var(--white); border:none; padding:13px; font-weight:700; font-size:14px; border-radius:6px; cursor:pointer; }
+.gate-error { display:none; color:#B42318; font-size:13px; margin-bottom:12px; }
+.gate-error.show { display:block; }
+
+/* --- Config warning --- */
+.config-warn { background:#FFF4E5; color:#93610C; font-size:13px; padding:14px 16px; border-radius:8px; margin: 20px 0; line-height:1.5; }
+.config-warn code { background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius:4px; }
+
+/* --- Admin room --- */
+.hero { margin: 20px 0 28px; }
+.hero h1 { font-size: 26px; font-weight: 800; margin: 0 0 8px; }
+.hero p { color: var(--grey); font-size: 14px; margin: 0; }
+
+.card-block { border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 24px; }
+.card-block h2 { font-size: 16px; font-weight: 700; margin: 0 0 16px; }
+
+label { display:block; font-size: 12.5px; font-weight: 600; margin-bottom: 5px; margin-top: 12px; }
+label:first-child { margin-top: 0; }
+input[type="text"], input[type="email"], select { width:100%; border:1.5px solid #D8DCE3; padding:10px 12px; border-radius:6px; font-size:14px; font-family:'Inter',Arial,sans-serif; }
+
+.entry-picker { display:none; margin-top: 12px; max-height: 240px; overflow-y:auto; border:1px solid var(--border); border-radius:6px; padding: 10px 14px; }
+.entry-picker.show { display:block; }
+.entry-picker h4 { font-size: 12.5px; font-weight:700; color:var(--blue); margin: 10px 0 4px; }
+.entry-picker h4:first-child { margin-top:0; }
+.entry-check { display:flex; align-items:center; gap:8px; padding:5px 0; font-size:13px; }
+
+.submit-btn { margin-top: 18px; width:100%; background:var(--blue); color:var(--white); border:none; padding:12px; font-weight:700; font-size:14px; border-radius:6px; cursor:pointer; }
+.submit-btn:hover { background:var(--blue-dark); }
+.submit-btn:disabled { background:#C7CBD2; cursor:not-allowed; }
+
+.result-box { display:none; margin-top:16px; background: var(--blue-light); border-radius:8px; padding:16px; font-size:13.5px; }
+.result-box.show { display:block; }
+.result-box .row { margin-bottom: 6px; }
+.result-box strong { color: var(--blue); }
+
+table { width:100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align:left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+th { color: var(--grey); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:0.03em; }
+.tier-tag { font-size:11px; font-weight:700; padding:2px 7px; border-radius:4px; background:var(--blue-light); color:var(--blue); }
+.loading-text { color: var(--grey); font-size: 13px; padding: 12px 0; }
+.refresh-btn { background:none; border:1px solid var(--border); color:var(--grey); font-size:12px; padding:6px 12px; border-radius:6px; cursor:pointer; font-family:'Inter',Arial,sans-serif; font-weight:600; }
+.refresh-btn:hover { border-color: var(--blue); color: var(--blue); }
 </style>
 </head>
 <body>
@@ -69,183 +104,282 @@ input:focus { outline:none; border-color: var(--blue); }
   </a>
 </div>
 
-<div class="wrap">
-  <div class="card">
-    <h1>Курс по DTF-печати</h1>
-    <p class="sub">Введите логин и пароль, которые вам выдали после оплаты.</p>
+<!-- Password gate -->
+<div class="gate-wrap" id="gateWrap">
+  <div class="gate-card">
+    <h1>Личный кабинет</h1>
+    <p class="gate-error" id="gateError">Неверный пароль.</p>
+    <input type="password" id="adminPasswordInput" placeholder="Пароль администратора">
+    <button class="btn" id="gateBtn">Войти</button>
+  </div>
+</div>
 
-    <form id="loginForm" autocomplete="off">
-      <label for="login">Логин</label>
-      <input type="text" id="login" name="login" autocomplete="username" required>
-      <label for="password">Пароль</label>
-      <input type="password" id="password" name="password" autocomplete="current-password" required>
-      <p class="error-msg" id="errorMsg">Неверный логин или пароль. Проверьте данные и попробуйте ещё раз.</p>
-      <button type="submit" class="btn">Войти</button>
-    </form>
+<!-- Admin room (hidden until password correct) -->
+<div class="shell" id="adminRoom" style="display:none;">
+  <div class="hero">
+    <h1>Личный кабинет</h1>
+    <p>Выдача доступа клиентам курса по DTF-печати.</p>
+  </div>
 
-    <p class="demo-link"><a href="course.html">Посмотреть программу курса без входа →</a></p>
+  <div id="configWarnSlot"></div>
+
+  <div class="card-block">
+    <h2>Выдать новый доступ</h2>
+
+    <label for="clientName">Имя клиента</label>
+    <input type="text" id="clientName" placeholder="Например, Иван Петров">
+
+    <label for="clientTelegram">Telegram</label>
+    <input type="text" id="clientTelegram" placeholder="@username">
+
+    <label for="clientEmail">Почта (необязательно)</label>
+    <input type="email" id="clientEmail" placeholder="mail@example.com">
+
+    <label for="tierSelect">Тариф</label>
+    <select id="tierSelect">
+      <option value="standard">Стандарт — Введение, Принтер, ЧЗВ (4 900 ₽)</option>
+      <option value="profi">Профи — весь курс (12 900 ₽)</option>
+      <option value="vip">VIP — весь курс + консультации (24 900 ₽)</option>
+      <option value="entry">Точка входа — 2 урока на выбор (350 ₽)</option>
+    </select>
+
+    <div class="entry-picker" id="entryPicker">
+      <div id="entryChaptersRoot"></div>
+      <p style="font-size:12px; color:var(--grey); margin-top:8px;" id="entryCounter">Выбрано: 0 из 2</p>
+    </div>
+
+    <button class="submit-btn" id="submitBtn">Создать и выдать доступ</button>
+
+    <div class="result-box" id="resultBox">
+      <div class="row"><strong>Логин:</strong> <span id="resultLogin"></span></div>
+      <div class="row"><strong>Пароль:</strong> <span id="resultPassword"></span></div>
+      <div class="row" style="margin-top:10px; color:var(--grey);">Отправь эти данные клиенту — этого достаточно, чтобы он вошёл на сайте.</div>
+    </div>
+  </div>
+
+  <div class="card-block">
+    <h2 style="display:flex; justify-content:space-between; align-items:center;">
+      Выданные доступы
+      <button class="refresh-btn" id="refreshBtn">Обновить список</button>
+    </h2>
+    <div id="clientsTableSlot"><p class="loading-text">Загрузка...</p></div>
   </div>
 </div>
 
 <script>
-const VALID_CREDENTIALS = [
-  { login: "student001", password: "xaji0y6d", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student002", password: "pbhsahxt", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student003", password: "hv3a3zmf", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student004", password: "8mdd4v30", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student005", password: "t9nt3w5u", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student006", password: "zbikcidk", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student007", password: "wnnhj7xv", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student008", password: "g0fn9xuy", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student009", password: "41ibljh7", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student010", password: "5lxo6qji", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student011", password: "ujv6oh9s", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student012", password: "dbdw2pcn", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student013", password: "9t84azyt", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student014", password: "jxepq85j", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student015", password: "sg65kxvf", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student016", password: "1t2tala7", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student017", password: "53lc58dr", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student018", password: "c11ertj5", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student019", password: "pht0hl9x", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student020", password: "pseimvih", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student021", password: "cwi64ciy", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student022", password: "he7ur23g", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student023", password: "dppq0y9d", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student024", password: "om5igqpk", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student025", password: "i7p5tb94", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student026", password: "874frhoc", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student027", password: "n9j2qp89", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student028", password: "uzfk8ut0", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student029", password: "cvs4f8cg", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student030", password: "vyie6ivw", tier: "standard", access: { type: "chapters", chapters: [0,1,4] } },
-  { login: "student031", password: "pvs7hzio", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student032", password: "ykl1cq99", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student033", password: "chj755nf", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student034", password: "4zw9xa3k", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student035", password: "x7eedtjv", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student036", password: "zhwjr64d", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student037", password: "pja1wj0t", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student038", password: "pac56t4u", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student039", password: "fel6246h", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student040", password: "id25owf7", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student041", password: "5935a0l7", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student042", password: "253j2d54", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student043", password: "i3qk2iag", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student044", password: "l58kxo9t", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student045", password: "7e8g8jdp", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student046", password: "0lvsnujz", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student047", password: "a7tz0ync", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student048", password: "xll4zklo", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student049", password: "okep7y6w", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student050", password: "ktakpuxq", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student051", password: "phr62gds", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student052", password: "wm31yiha", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student053", password: "ir4cowgz", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student054", password: "rixa11dp", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student055", password: "g8sbi4q2", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student056", password: "y9v86wzs", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student057", password: "3t60rjiw", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student058", password: "1swjckjl", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student059", password: "teiyzcot", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student060", password: "ohp6vz41", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student061", password: "nam148p0", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student062", password: "tvhhpbmy", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student063", password: "ofqewaou", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student064", password: "axeqbnhl", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student065", password: "1n13jcat", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student066", password: "9mx2x18h", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student067", password: "afeyuhz1", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student068", password: "gv0e38da", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student069", password: "ly8ozcyw", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student070", password: "d14ve92m", tier: "profi", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student071", password: "pnsm43d8", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student072", password: "w3zp08j3", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student073", password: "trp0j43d", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student074", password: "5iqvnb4g", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student075", password: "h2m5zja8", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student076", password: "dzr1yxr2", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student077", password: "dhylurtp", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student078", password: "0lzjjege", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student079", password: "t1ghr09s", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student080", password: "kdgigatj", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student081", password: "9tze5r5u", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student082", password: "qpgb7r3o", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student083", password: "cwbfuk9e", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student084", password: "1v2isqp4", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student085", password: "9kwv08hh", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student086", password: "xfgcaqvk", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student087", password: "izzqy72w", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student088", password: "x7ptx63c", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student089", password: "fl0ukeyz", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student090", password: "7srcbplj", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student091", password: "d84u89yj", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student092", password: "b1qx6gvw", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student093", password: "rdmly4ly", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student094", password: "k83tqll8", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student095", password: "os9xtogn", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student096", password: "1w1ht7pz", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student097", password: "e9vifttd", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student098", password: "96qe3rzs", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student099", password: "j49itn7s", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
-  { login: "student100", password: "55j2o7s3", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
+const COURSE = [
+  { title: "Введение", lessons: [
+    { n: "1.1", title: "Добро пожаловать!", url: "https://teletype.in/@cstmstd/Lw55pGNm8hQ", video: true },
+    { n: "1.2", title: "Предисловие", url: "https://teletype.in/@cstmstd/u_pXJifdHCv", video: false },
+    { n: "1.3", title: "Обзор технологии DTF", url: "https://teletype.in/@cstmstd/uCPbVMOq6Xc", video: false },
+    { n: "1.4", title: "Необходимое оборудование и материалы", url: "https://teletype.in/@cstmstd/divk3oGoeKD", video: true },
+    { n: "1.5", title: "Преимущества и недостатки DTF-печати", url: "https://teletype.in/@cstmstd/WHsetnakpjv", video: false },
+    { n: "1.6", title: "Сравнение технологий печати", url: "https://teletype.in/@cstmstd/qWN1I9o9s2r", video: false }
+  ]},
+  { title: "Работа с принтером", lessons: [
+    { n: "2.1", title: "Выбор принтера для переоборудования", url: "https://teletype.in/@cstmstd/o5m3QoToM6b", video: true },
+    { n: "2.2", title: "Подготовка принтера к DTF-печати", url: "https://teletype.in/@cstmstd/KISz25IkfMC", video: true },
+    { n: "2.3", title: "Ежедневное обслуживание принтера", url: "https://teletype.in/@cstmstd/fV6W85Q5ayh", video: true },
+    { n: "2.4", title: "Модификации", url: "https://teletype.in/@cstmstd/gz8VxIQh35A", video: false },
+    { n: "2.5", title: "Печатающая головка и манифолд", url: "https://teletype.in/@cstmstd/mAS558j-mgD", video: false },
+    { n: "2.6", title: "Промывка печатающей головы", url: "https://teletype.in/@cstmstd/l45w7VMXkU7", video: true }
+  ]},
+  { title: "Производственная часть", lessons: [
+    { n: "3.1", title: "Печь", url: "https://teletype.in/@cstmstd/i-elqWUV9s4", video: true },
+    { n: "3.2", title: "Термопресс", url: "https://teletype.in/@cstmstd/eWySbGqlz3h", video: true },
+    { n: "3.3", title: "Держатель рулона", url: "https://teletype.in/@cstmstd/cg3Tk4v7Hnh", video: true },
+    { n: "3.4", title: "Расстановка", url: "https://teletype.in/@cstmstd/Q54fokHTfNw", video: false },
+    { n: "3.5", title: "Вытяжная система", url: "https://teletype.in/@cstmstd/O1Mo6AVBoXN", video: false },
+    { n: "3.6", title: "Позиционирование принтов", url: "https://teletype.in/@cstmstd/r2u1Xv4WLnd", video: true },
+    { n: "3.7", title: "Термоскотч", url: "https://teletype.in/@cstmstd/QAEIsBhJEaa", video: true },
+    { n: "3.8", title: "Подушки для печати", url: "https://teletype.in/@cstmstd/X7NNYL0jpmq", video: true }
+  ]},
+  { title: "Работа с программами", lessons: [
+    { n: "4.1", title: "Программы для работы с DTF-печатью", url: "https://teletype.in/@cstmstd/jLpuF3Eskxa", video: false },
+    { n: "4.2", title: "Подготовка файлов к печати", url: "https://teletype.in/@cstmstd/U2UVxRF6Gu5", video: true },
+    { n: "4.3", title: "Работа c PrintHelp", url: "https://teletype.in/@cstmstd/L__cSiA0s5p", video: true },
+    { n: "4.4", title: "Работа c AcroRip", url: "https://teletype.in/@cstmstd/5ctfj4n-n7f", video: true },
+    { n: "4.5", title: "Работа c Antipampers", url: "https://teletype.in/@cstmstd/VnjnyzJQc-Y", video: true },
+    { n: "4.6", title: "Мокапы и работа с ними", url: "https://teletype.in/@cstmstd/OZjprxKG11M", video: true },
+    { n: "4.7", title: "Улучшение качества изображения", url: "https://teletype.in/@cstmstd/9hLvuPGpPaE", video: true },
+    { n: "4.8", title: "Полутоновая-растеризация", url: "https://teletype.in/@cstmstd/Dp9NBZYAeJh", video: true },
+    { n: "4.9", title: "Профилирование принтера и монитора", url: "https://teletype.in/@cstmstd/k8AH6tRbEjy", video: true },
+    { n: "4.9.1", title: "Процесс печати", url: "https://teletype.in/@cstmstd/nV_ybtLbQd1", video: true }
+  ]},
+  { title: "ЧЗВ", lessons: [
+    { n: "5.1", title: "Медленная печать", url: "https://teletype.in/@cstmstd/pxWJcFqu3DQ", video: true },
+    { n: "5.2", title: "Грязный принт / полосы / течёт подложка", url: "https://teletype.in/@cstmstd/g_bIBp5E8FB", video: true },
+    { n: "5.3", title: "Не насыщенный белый цвет", url: "https://teletype.in/@cstmstd/0WmtGblo3YB", video: true },
+    { n: "5.4", title: "Проблемы с захватом плёнки", url: "https://teletype.in/@cstmstd/U7tqk-L47Jx", video: true },
+    { n: "5.5", title: "Вылезает белая подложка", url: "https://teletype.in/@cstmstd/2yklWK8Cfy3", video: true },
+    { n: "5.6", title: "Отклеивается печать", url: "https://teletype.in/@cstmstd/7NjCJuB-jzj", video: false },
+    { n: "5.7", title: "Принт «будто пылит»", url: "https://teletype.in/@cstmstd/_LN_ZV-77Y2", video: true },
+    { n: "5.8", title: "При включении горят красным кнопки", url: "https://teletype.in/@cstmstd/FAIHmJZmHnv", video: false }
+  ]},
+  { title: "Бизнес-аспекты и маркетинг", lessons: [
+    { n: "6.1", title: "Поиск клиентов и стратегии продаж", url: "https://teletype.in/@cstmstd/oNRCRCm-X25", video: false },
+    { n: "6.2", title: "Создание портфолио и продвижение услуг", url: "https://teletype.in/@cstmstd/3wFlteQ299C", video: false },
+    { n: "6.3", title: "План развития и масштабирования бизнеса", url: "https://teletype.in/@cstmstd/VldXABxKpr_", video: false },
+    { n: "6.4", title: "Быстрые ответы", url: "https://teletype.in/@cstmstd/sa6c2Mw_wMl", video: false },
+    { n: "6.5", title: "Финансовая модель", url: "https://teletype.in/@cstmstd/dnZonRnirNo", video: true }
+  ]},
+  { title: "Завершение", lessons: [
+    { n: "7", title: "Завершение курса", url: "https://teletype.in/@cstmstd/1A0Mc9V8nys", video: true }
+  ]}
 ];
 
-// ⚠️ НАСТРОЙКА: та же ссылка, что и в admin.html — чтобы вход видел клиентов,
-// добавленных через личный кабинет, без правки кода.
-const SCRIPT_URL = 'ВСТАВЬ_СЮДА_ССЫЛКУ_НА_APPS_SCRIPT';
+// ⚠️ НАСТРОЙКА: вставь сюда ссылку и секретный код из Apps Script (см. apps-script-code.txt)
+const CONFIG = {
+  SCRIPT_URL: 'ВСТАВЬ_СЮДА_ССЫЛКУ_НА_APPS_SCRIPT',
+  SECRET_TOKEN: 'ВСТАВЬ_СЮДА_СВОЙ_СЕКРЕТНЫЙ_КОД',
+  ADMIN_PASSWORD: 'change-me-2026' // ⚠️ смени на свой пароль для входа в кабинет
+};
 
-if (sessionStorage.getItem('dtf_logged_in') === 'true') {
-  window.location.href = 'course.html';
-}
+const TIER_ACCESS = {
+  standard: { type: 'chapters', chapters: [0,1,4] },
+  profi: { type: 'chapters', chapters: [0,1,2,3,4,5,6] },
+  vip: { type: 'chapters', chapters: [0,1,2,3,4,5,6] }
+};
 
-const form = document.getElementById('loginForm');
-const errorMsg = document.getElementById('errorMsg');
-const submitBtn = form.querySelector('.btn');
+const isConfigured = !CONFIG.SCRIPT_URL.startsWith('ВСТАВЬ');
 
-async function fetchSheetCredentials() {
-  if (SCRIPT_URL.startsWith('ВСТАВЬ')) return []; // кабинет ещё не настроен — работаем только со статическим списком
-  try {
-    const res = await fetch(SCRIPT_URL);
-    const rows = await res.json();
-    return rows.map(r => ({
-      login: r.login,
-      password: r.password,
-      tier: r.tier,
-      access: JSON.parse(r.access)
-    }));
-  } catch (err) {
-    return []; // если таблица недоступна — просто работаем со статическим списком, вход не ломается
-  }
-}
+// --- Password gate ---
+const gateWrap = document.getElementById('gateWrap');
+const adminRoom = document.getElementById('adminRoom');
+const gateBtn = document.getElementById('gateBtn');
+const gateError = document.getElementById('gateError');
+const pwInput = document.getElementById('adminPasswordInput');
 
-form.addEventListener('submit', async function (e) {
-  e.preventDefault();
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Проверка...';
-
-  const sheetCredentials = await fetchSheetCredentials();
-  const allCredentials = VALID_CREDENTIALS.concat(sheetCredentials);
-
-  const login = document.getElementById('login').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const match = allCredentials.find(c => c.login === login && c.password === password);
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = 'Войти';
-
-  if (match) {
-    sessionStorage.setItem('dtf_logged_in', 'true');
-    sessionStorage.setItem('dtf_user', login);
-    sessionStorage.setItem('dtf_tier', match.tier);
-    sessionStorage.setItem('dtf_access', JSON.stringify(match.access));
-    window.location.href = 'course.html';
+function tryEnter() {
+  if (pwInput.value === CONFIG.ADMIN_PASSWORD) {
+    gateWrap.style.display = 'none';
+    adminRoom.style.display = 'block';
+    initRoom();
   } else {
-    errorMsg.classList.add('show');
+    gateError.classList.add('show');
   }
-});
+}
+gateBtn.addEventListener('click', tryEnter);
+pwInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryEnter(); });
+
+function initRoom() {
+  if (!isConfigured) {
+    document.getElementById('configWarnSlot').innerHTML = `
+      <div class="config-warn">
+        Кабинет ещё не подключён к Google Таблице. Открой <code>admin.html</code> в редакторе кода,
+        найди блок <code>CONFIG</code> в самом низу файла и вставь туда ссылку и секретный код,
+        которые ты получил при разворачивании Apps Script (см. файл <code>apps-script-code.txt</code>).
+        Пока это не сделано, форма ниже не будет сохранять данные.
+      </div>
+    `;
+  }
+
+  // Entry-tier lesson picker
+  const entryRoot = document.getElementById('entryChaptersRoot');
+  const entryChecks = [];
+  COURSE.forEach((chapter, ci) => {
+    const block = document.createElement('div');
+    block.innerHTML = `<h4>${chapter.title}</h4>`;
+    chapter.lessons.forEach(lesson => {
+      const row = document.createElement('div');
+      row.className = 'entry-check';
+      const id = `admin_l_${ci}_${lesson.n}`;
+      row.innerHTML = `<input type="checkbox" id="${id}" value="${lesson.n}"><label for="${id}">${lesson.n} ${lesson.title}</label>`;
+      block.appendChild(row);
+      entryChecks.push(row.querySelector('input'));
+    });
+    entryRoot.appendChild(block);
+  });
+  const entryCounter = document.getElementById('entryCounter');
+  function updateEntryCounter() {
+    const checked = entryChecks.filter(c => c.checked);
+    entryChecks.forEach(c => { if (!c.checked) c.disabled = checked.length >= 2; });
+    entryCounter.textContent = `Выбрано: ${checked.length} из 2`;
+  }
+  entryChecks.forEach(c => c.addEventListener('change', updateEntryCounter));
+
+  const tierSelect = document.getElementById('tierSelect');
+  const entryPicker = document.getElementById('entryPicker');
+  tierSelect.addEventListener('change', () => {
+    entryPicker.classList.toggle('show', tierSelect.value === 'entry');
+  });
+
+  // Submit
+  document.getElementById('submitBtn').addEventListener('click', async () => {
+    const name = document.getElementById('clientName').value.trim();
+    const telegram = document.getElementById('clientTelegram').value.trim();
+    const email = document.getElementById('clientEmail').value.trim();
+    const tier = tierSelect.value;
+
+    let access;
+    if (tier === 'entry') {
+      const chosen = entryChecks.filter(c => c.checked).map(c => c.value);
+      if (chosen.length !== 2) { alert('Для тарифа "Точка входа" выбери ровно 2 урока'); return; }
+      access = { type: 'lessons', lessons: chosen };
+    } else {
+      access = TIER_ACCESS[tier];
+    }
+
+    const login = 'client' + Math.random().toString(36).slice(2, 8);
+    const password = Math.random().toString(36).slice(2, 10);
+
+    if (isConfigured) {
+      try {
+        await fetch(CONFIG.SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // важно: так избегаем блокировки браузером (CORS)
+          body: JSON.stringify({
+            token: CONFIG.SECRET_TOKEN,
+            login, password, tier,
+            access: JSON.stringify(access),
+            name, telegram, email
+          })
+        });
+        loadClients();
+      } catch (err) {
+        alert('Не удалось сохранить в таблицу. Проверь настройку CONFIG в файле admin.html.');
+      }
+    }
+
+    document.getElementById('resultLogin').textContent = login;
+    document.getElementById('resultPassword').textContent = password;
+    document.getElementById('resultBox').classList.add('show');
+  });
+
+  document.getElementById('refreshBtn').addEventListener('click', loadClients);
+  if (isConfigured) loadClients();
+  else document.getElementById('clientsTableSlot').innerHTML = '<p class="loading-text">Список появится после настройки CONFIG.</p>';
+}
+
+async function loadClients() {
+  const slot = document.getElementById('clientsTableSlot');
+  slot.innerHTML = '<p class="loading-text">Загрузка...</p>';
+  try {
+    const res = await fetch(CONFIG.SCRIPT_URL);
+    const rows = await res.json();
+    if (!rows.length) {
+      slot.innerHTML = '<p class="loading-text">Пока никто не добавлен.</p>';
+      return;
+    }
+    const TIER_LABELS = { standard: 'Стандарт', profi: 'Профи', vip: 'VIP', entry: 'Точка входа' };
+    let html = '<table><tr><th>Логин</th><th>Пароль</th><th>Тариф</th><th>Имя</th><th>Telegram</th><th>Дата</th></tr>';
+    rows.forEach(r => {
+      html += `<tr>
+        <td>${r.login}</td>
+        <td>${r.password}</td>
+        <td><span class="tier-tag">${TIER_LABELS[r.tier] || r.tier}</span></td>
+        <td>${r.name || '—'}</td>
+        <td>${r.telegram || '—'}</td>
+        <td>${r.date ? new Date(r.date).toLocaleDateString('ru-RU') : '—'}</td>
+      </tr>`;
+    });
+    html += '</table>';
+    slot.innerHTML = html;
+  } catch (err) {
+    slot.innerHTML = '<p class="loading-text">Не удалось загрузить список. Проверь настройку CONFIG.</p>';
+  }
+}
 </script>
 
 </body>
-
 </html>

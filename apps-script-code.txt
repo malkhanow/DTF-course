@@ -1,0 +1,88 @@
+// ===================================================================
+// Код для Google Apps Script — превращает Google Таблицу в мини-базу
+// данных клиентов курса. Инструкция по установке — в конце файла.
+// ===================================================================
+
+const SECRET_TOKEN = 'ЗАМЕНИ_НА_СВОЙ_СЕКРЕТНЫЙ_КОД'; // придумай любой набор букв/цифр, никому его не давай
+
+function doGet(e) {
+  const sheet = getSheet();
+  const data = sheet.getDataRange().getValues();
+  const headers = data[0];
+  const rows = data.slice(1).map(row => {
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = row[i]);
+    return obj;
+  });
+  return ContentService.createTextOutput(JSON.stringify(rows))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const body = JSON.parse(e.postData.contents);
+
+  if (body.token !== SECRET_TOKEN) {
+    return ContentService.createTextOutput(JSON.stringify({ error: 'unauthorized' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const sheet = getSheet();
+  sheet.appendRow([
+    body.login,
+    body.password,
+    body.tier,
+    body.access,
+    body.name || '',
+    body.telegram || '',
+    body.email || '',
+    new Date()
+  ]);
+
+  return ContentService.createTextOutput(JSON.stringify({ success: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function getSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName('Clients');
+  if (!sheet) {
+    sheet = ss.insertSheet('Clients');
+    sheet.appendRow(['login', 'password', 'tier', 'access', 'name', 'telegram', 'email', 'date']);
+  }
+  return sheet;
+}
+
+// ===================================================================
+// ИНСТРУКЦИЯ ПО УСТАНОВКЕ:
+//
+// 1. Зайди на sheets.google.com, создай новую пустую таблицу.
+//    Назови её, например, "DTF Course — Клиенты".
+//
+// 2. В меню сверху: Расширения → Apps Script.
+//    Откроется редактор кода в новой вкладке.
+//
+// 3. Удали весь пример-заглушку (function myFunction() {...}),
+//    вставь вместо него весь этот файл целиком (без этого блока
+//    инструкции — только код выше).
+//
+// 4. В первой строке кода замени 'ЗАМЕНИ_НА_СВОЙ_СЕКРЕТНЫЙ_КОД'
+//    на любой свой набор букв и цифр — это будет секретный ключ
+//    сайта для записи в таблицу. Запомни его, он понадобится
+//    на следующем шаге (в admin.html).
+//
+// 5. Нажми на дискетку (Сохранить проект).
+//
+// 6. Нажми синюю кнопку "Развернуть" (Deploy) → "Новое развёртывание".
+//    Тип: "Веб-приложение" (Web app).
+//    "Кто имеет доступ": выбери "Все" (Anyone).
+//    Нажми "Развернуть".
+//
+// 7. Google попросит разрешения — разреши (это твой же скрипт,
+//    доступ к твоей же таблице).
+//
+// 8. После разворачивания появится ссылка вида:
+//    https://script.google.com/macros/s/AKfycb.../exec
+//    Скопируй её — это и есть адрес твоей мини-базы данных.
+//    Вставь эту ссылку в admin.html и login.html туда, где
+//    написано SCRIPT_URL (см. инструкцию в самих файлах).
+// ===================================================================
