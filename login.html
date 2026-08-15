@@ -189,11 +189,12 @@ const VALID_CREDENTIALS = [
   { login: "student098", password: "96qe3rzs", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
   { login: "student099", password: "j49itn7s", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
   { login: "student100", password: "55j2o7s3", tier: "vip", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
+  { login: "vladimir", password: "EeSPlhlis7Xl", tier: "owner", access: { type: "chapters", chapters: [0,1,2,3,4,5,6] } },
 ];
 
 // ⚠️ НАСТРОЙКА: та же ссылка, что и в admin.html — чтобы вход видел клиентов,
 // добавленных через личный кабинет, без правки кода.
-const SCRIPT_URL = 'ВСТАВЬ_СЮДА_ССЫЛКУ_НА_APPS_SCRIPT';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQb6thv63wwUmZrcKE_J_Z83gLUyt3lWTzpQSonEPASkocdd5nmSmNPKmWRANWL_cP/exec';
 
 if (sessionStorage.getItem('dtf_logged_in') === 'true') {
   window.location.href = 'course.html';
@@ -239,7 +240,12 @@ form.addEventListener('submit', async function (e) {
     sessionStorage.setItem('dtf_user', login);
     sessionStorage.setItem('dtf_tier', match.tier);
     sessionStorage.setItem('dtf_access', JSON.stringify(match.access));
-    window.location.href = 'course.html';
+    if (match.tier === 'owner') {
+      sessionStorage.setItem('dtf_owner', 'true');
+      window.location.href = 'admin.html';
+    } else {
+      window.location.href = 'course.html';
+    }
   } else {
     errorMsg.classList.add('show');
   }

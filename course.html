@@ -172,7 +172,7 @@ const userTier = sessionStorage.getItem('dtf_tier');
 let userAccess = null;
 try { userAccess = JSON.parse(sessionStorage.getItem('dtf_access') || 'null'); } catch (e) { userAccess = null; }
 
-const TIER_LABELS = { standard: 'Стандарт', profi: 'Профи', vip: 'VIP', entry: 'Точка входа' };
+const TIER_LABELS = { standard: 'Стандарт', profi: 'Профи', vip: 'VIP', entry: 'Точка входа', owner: 'Владелец' };
 
 function hasChapterAccess(chIdx, lessonN) {
   if (chIdx === 0) return true; // глава "Введение" всегда открыта
@@ -198,6 +198,7 @@ setTimeout(() => {
     sessionStorage.removeItem('dtf_user');
     sessionStorage.removeItem('dtf_tier');
     sessionStorage.removeItem('dtf_access');
+    sessionStorage.removeItem('dtf_owner');
     window.location.reload();
   });
 }, 0);
