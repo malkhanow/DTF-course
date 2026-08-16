@@ -334,9 +334,13 @@ function initRoom() {
 
     if (isConfigured) {
       try {
+        // no-cors: Google Apps Script POST-ответы браузер не даёт прочитать напрямую
+        // (известное ограничение), поэтому просто отправляем запрос и не ждём ответа,
+        // а сразу после — обновляем список через GET, чтобы убедиться, что строка сохранилась.
         await fetch(CONFIG.SCRIPT_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // важно: так избегаем блокировки браузером (CORS)
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({
             token: CONFIG.SECRET_TOKEN,
             login, password, tier,
@@ -344,9 +348,9 @@ function initRoom() {
             name, telegram, email
           })
         });
-        loadClients();
+        setTimeout(loadClients, 1200); // небольшая пауза, чтобы таблица успела обновиться
       } catch (err) {
-        alert('Не удалось сохранить в таблицу. Проверь настройку CONFIG в файле admin.html.');
+        alert('Не удалось отправить запрос в таблицу. Проверь настройку CONFIG в файле admin.html и интернет-соединение.');
       }
     }
 
